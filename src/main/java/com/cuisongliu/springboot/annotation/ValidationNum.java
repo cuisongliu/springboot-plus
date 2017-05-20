@@ -34,12 +34,10 @@ import java.lang.annotation.Target;
 public @interface ValidationNum {
     /**
      * 整数部分
-     * @return
      */
     int integer();
     /**
      * 小数部分
-     * @return
      */
     int floater();
 }

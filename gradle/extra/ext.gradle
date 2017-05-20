@@ -25,11 +25,11 @@
 //定义版本号
 ext {
     junitVersion = "4.11"
-    mapperVersion = "3.4.0"
     springBootVersion = "1.5.3.RELEASE"
-    springBootMysqlVersion = "1.3.0"
+    springBootMybatisVersion = "1.3.0"
     springBootTkMapperVersion = "1.1.1"
     springBootPageHelperVersion = "1.1.1"
+    springBootOrderbyHelperVersion = "1.0"
     cglibVersion="3.2.5"
     codecVersion="1.9"
     beanUtilsVersion="1.8.3"
@@ -39,8 +39,7 @@ ext {
     fastJsonVersion="1.2.32"
     druidVersion="1.0.31"
     mysqlVersion="5.1.42"
-    generatorVersion="1.3.5"
-    projectLocation = "https://github.com/cuisongliu/gradle-plugins"
+    projectLocation = "https://github.com/cuisongliu/springboot"
     baseUrl = "http://maven.cuisongliu.com"
     nexusUrl = "$baseUrl/content/groups/public/"
     uploadUrl = "$baseUrl/repositories/thirdparty/"

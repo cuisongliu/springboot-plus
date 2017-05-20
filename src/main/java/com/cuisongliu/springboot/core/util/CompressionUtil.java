@@ -44,11 +44,9 @@ public final class CompressionUtil {
     /**
      * compress data by {@linkplain Level}
      * 压缩数据
-     * @author cuijinrui
      *
      * @param data
      * @param level see {@link Level}
-     * @return
      * @throws IOException
      */
     public static byte[] compress(byte[] data, Level level) throws IOException {
@@ -75,10 +73,8 @@ public final class CompressionUtil {
     /**
      * decompress data
      * 解压缩数据
-     * @author cuijinrui
      *
      * @param data
-     * @return
      * @throws IOException
      * @throws DataFormatException
      */

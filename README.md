@@ -1,14 +1,12 @@
-[![Build Status](https://travis-ci.org/cuisongliu/druid-boot-starter.svg?branch=master)](https://travis-ci.org/cuisongliu/druid-boot-starter)
-[![Dependency Status](https://www.versioneye.com/user/projects/5918687ae1638f0051a0a62c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5918687ae1638f0051a0a62c)
 [![license](https://img.shields.io/badge/gradle-3.3-brightgreen.svg)](https://gradle.org)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/mit-license.php)
 
-#  [Druid](https://github.com/alibaba/druid)  integration  with springboot
+#  springboot basic framework integration
 
-Druid-Spring-Boot-Starter 帮助你集成通用 [Druid](https://github.com/alibaba/druid) 到 Spring Boot。
-
-Druid-Spring-Boot-Starter will help you use [Druid](https://github.com/alibaba/druid) with Spring Boot.
-
+ 帮助你集成框架 到 Spring Boot。
+ 
+ Help you integrate the framework to Spring Boot.
+ 
 ## How to use
 
 ### maven
@@ -37,8 +35,8 @@ Add the following dependency to your pom.xml:
 
     <dependency>
        <groupId>com.cuisongliu</groupId>
-       <artifactId>druid-spring-boot-starter</artifactId>
-       <version>1.0.31.01</version>
+       <artifactId>springboot</artifactId>
+       <version>1.0.0</version>
      </dependency>
 
 ### gradle
@@ -62,90 +60,28 @@ Add the following dependency to your build.gradle:
     
     compile "com.cuisongliu:druid-spring-boot-starter:1+"
     
-### springboot properties set
-
-在application.properties 或者application.yml加入[相关参数](https://github.com/alibaba/druid/wiki/DruidDataSource%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8)
-
-at  application.properties or application.yml append some properties.
-
-| properties | IsNull? | Defaults |
-| :------|:------|:------|
-|spring.datasource.url|no|null|
-|spring.datasource.username|no|null|
-|spring.datasource.password|no|null|
-|spring.datasource.druid.max-active|yes|8|
-|spring.datasource.druid.min-idle|yes|0|
-|spring.datasource.druid.initial-size|yes|0|
-|spring.datasource.druid.max-wait|yes|-1|
-|spring.datasource.druid.time-between-eviction-runs-millis|yes|60 * 1000L|
-|spring.datasource.druid.max-open-prepared-statements|yes|-1|
-|spring.datasource.druid.test-on-borrow|yes|false|
-|spring.datasource.druid.validation-query|yes|null|
-|spring.datasource.druid.test-on-return|yes|false|
-|spring.datasource.druid.test-while-idle|yes|true|
-|spring.datasource.druid.pool-prepared-statements|yes|false|
-|spring.datasource.druid.filters|yes|false|
-|spring.datasource.druid.max-pool-prepared-statement-per-connection-size|yes|-1|
-|spring.datasource.druid.validation-query-timeout|yes|-1|
-|spring.datasource.druid.min-evictable-idle-time-millis|yes|1000L * 60L * 30L|
-|spring.datasource.druid.connection-properties|yes|null|
-
-sql slow config:
-
-    spring:
-     datasource:
-        druid:
-          connection-properties:
-            - druid.stat.mergeSql=true
-            - druid.stat.slowSqlMillis=5000
-
-[servlet properties](https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_StatViewServlet%E9%85%8D%E7%BD%AE)
-
-| properties | IsNull? | Defaults |
-| :------|:------|:------|
-|spring.datasource.druid.servlet.enable|yes|true|
-|spring.datasource.druid.servlet.url-mappings|yes|/druid/*|
-|spring.datasource.druid.servlet.allow|yes|null|
-|spring.datasource.druid.servlet.deny|yes|null|
-|spring.datasource.druid.servlet.login-username|yes|null|
-|spring.datasource.druid.servlet.login-password|yes|null|
-|spring.datasource.druid.servlet.reset-enable|yes|null|
-
-[filter properties](https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_%E9%85%8D%E7%BD%AEWebStatFilter)
-
-| properties | IsNull? | Defaults |
-| :------|:------|:------|
-|spring.datasource.druid.servlet.enable|yes|false|
-|spring.datasource.druid.servlet.exclusions|yes|*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*|
-|spring.datasource.druid.servlet.url-pattern|yes|/*|
-|spring.datasource.druid.servlet.session-stat-max-count|yes|1000|
-|spring.datasource.druid.servlet.session-stat-enable|yes|false|
-|spring.datasource.druid.servlet.principal-session-name|yes|USER_SESSION|
-|spring.datasource.druid.servlet.principal-cookie-name|yes|USER_COOKIE|
-|spring.datasource.druid.servlet.profile-enable|yes|true|
-
-[stat properties](https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE_Druid%E5%92%8CSpring%E5%85%B3%E8%81%94%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE)
-
-| properties | IsNull? | Defaults |
-| :------|:------|:------|
-|spring.datasource.druid.stat.enable|yes|false|
-|spring.datasource.druid.stat.aop-types|yes||
-|spring.datasource.druid.stat.target-bean-type|yes|null|
-|spring.datasource.druid.stat.bean-names|yes|null|
-
-> aop-type可多选,且多选时必须拿 , 分隔.
+### Depends on the framework and version
 
 
-spring.datasource.druid.stat.aop-types  待选值有[ type,name ]
-
-当enable=true时候,aop-types必须有type或者name的其中一项.
-当aop-types有name值时,bean-names不能为空.当aop-types有type值时,target-bean-type不能为空.
-
-spring.datasource.druid.stat.aop-types  selected value is [ type,name ]
-
-
-When ```enable=true``` , aop-types must have either ```type``` or  ```name```.
-When ```aop-types``` has ```name``` value, ```bean-names``` can not be null. When ```aop-types``` have ```type``` values, ```target-bean-type``` can not be empty.
+| dependencies | version |
+| :------|:------|
+|spring-boot-starter-web|1.5.3.RELEASE|
+|spring-boot-starter-jdbc|1.5.3.RELEASE|
+|spring-boot-starter-aop|1.5.3.RELEASE|
+|spring-boot-starter-thymeleaf|1.5.3.RELEASE|
+|cglib-nodep|3.2.5|
+|commons-codec|1.9|
+|commons-beanutils-core|1.8.3|
+|commons-collections|3.2.2|
+|commons-lang|2.6|
+|jsoup|1.10.2|
+|fastjson|1.2.32|
+|mysql-connector-java|5.1.42|
+|mybatis-spring-boot-starter|1.3.0|
+|mapper-spring-boot-starter|1.1.1|
+|pagehelper-spring-boot-starter|1.1.1|
+|orderbyhelper-spring-boot-starter|1.0|
+|druid-spring-boot-starter|1.0.31.04|
 
 ## Example
 
@@ -177,3 +113,7 @@ When ```aop-types``` has ```name``` value, ```bean-names``` can not be null. Whe
 ## Acknowledgments
 
  [druid](https://github.com/alibaba/druid).
+ [mapper](https://github.com/abel533/Mapper).
+ [pagehelper](https://github.com/pagehelper/Mybatis-PageHelper)
+ [OrderByHelper](https://github.com/abel533/OrderByHelper)
+ [mybatis](https://github.com/mybatis/mybatis-3)

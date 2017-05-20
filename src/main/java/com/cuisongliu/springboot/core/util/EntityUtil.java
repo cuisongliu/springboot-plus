@@ -44,7 +44,6 @@ public class EntityUtil {
      * 检查一个对象是否为空
      *
      * @param obj
-     * @return
      */
     public static boolean isNullOrEmpty(Object obj) {
         if (obj == null)

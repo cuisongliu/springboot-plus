@@ -35,7 +35,6 @@ public class CollectionUtils {
      * null转成空列表
      *
      * @param param
-     * @return
      */
     public static List null2EmptyArrayList(Object param) {
 
@@ -50,7 +49,6 @@ public class CollectionUtils {
      *
      * @param str
      * @param list
-     * @return
      */
     public static boolean matchListValue(String str, List list) {
         if (EntityUtil.isNullOrEmpty(list)) {
@@ -69,7 +67,6 @@ public class CollectionUtils {
      * 把数组用spilt分割组合成一个string
      * @param spilt
      * @param list
-     * @return
      */
     public static String arrayToString(String spilt  , Object... list){
         StringBuilder sb = new StringBuilder();
@@ -84,7 +81,6 @@ public class CollectionUtils {
      *  数组分页并组合成一个string
      * @param ary
      * @param subSize
-     * @return
      */
     public static String[] splitAry(Object[] ary, int subSize, String spilt) {
         int length = ary.length;//原数组长度

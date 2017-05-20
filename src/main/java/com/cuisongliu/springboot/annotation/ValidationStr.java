@@ -34,12 +34,10 @@ import java.lang.annotation.Target;
 public @interface ValidationStr {
     /**
      * 最小长度
-     * @return
      */
     int minlength() default 1;
     /**
      * 最大长度
-     * @return
      */
     int maxlength();
 }

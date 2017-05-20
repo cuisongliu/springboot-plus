@@ -50,10 +50,10 @@ dependencies {
     compile "com.alibaba:fastjson:${fastJsonVersion}"
 
     compile "mysql:mysql-connector-java:${mysqlVersion}"
-    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springBootMysqlVersion}"
+    compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springBootMybatisVersion}"
     compile "tk.mybatis:mapper-spring-boot-starter:${springBootTkMapperVersion}"
     compile "com.github.pagehelper:pagehelper-spring-boot-starter:${springBootPageHelperVersion}"
-    compile "com.cuisongliu:orderbyhelper-spring-boot-starter:1.0"
+    compile "com.cuisongliu:orderbyhelper-spring-boot-starter:${springBootOrderbyHelperVersion}"
     compile "com.cuisongliu:druid-spring-boot-starter:${druidVersion}.04"
 
     testCompile "${springBootGroup}:${springBootArtifactId}test:${springBootVersion}"
