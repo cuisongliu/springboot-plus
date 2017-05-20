@@ -33,6 +33,7 @@ import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 /**
  * Service基类，所有Service均继承该类
@@ -77,6 +78,16 @@ public abstract class BaseBiz<T>{
     @Transactional(readOnly = true)
     public T getByEntity(T entity)  {
         return myMapper.selectOne(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> list(T entity)  {
+        return myMapper.select(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<T> listAll()  {
+        return myMapper.selectAll();
     }
 
     // base新增方法
