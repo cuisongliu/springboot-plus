@@ -95,6 +95,8 @@ Add the following dependency to your build.gradle:
     3. 在入口类加入ComponentScan和MapperScan配置
     4.  @ComponentScan 和 @MapperScan  设置不扫描com.cuisongliu 
 
+> [Example for cuisongliu's springboot](https://github.com/cuisongliu/springboot-integration)
+
 ## Acknowledgments
 
  [druid](https://github.com/alibaba/druid).
