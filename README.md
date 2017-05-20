@@ -88,11 +88,12 @@ Add the following dependency to your build.gradle:
     1. add to project configure
     2. application.java extends from SpringMvcConfig
     3. application.java append to @ComponentScan and @MapperScan
-    
+    4.  @ComponentScan and @MapperScan not in package com.cuisongliu
     
     1. 在项目中加入项目配置文件
     2. 在springboot 的入口继承SpringMvcConfig
     3. 在入口类加入ComponentScan和MapperScan配置
+    4.  @ComponentScan 和 @MapperScan  设置不扫描com.cuisongliu 
 
 ## Acknowledgments
 
