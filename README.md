@@ -83,32 +83,16 @@ Add the following dependency to your build.gradle:
 |orderbyhelper-spring-boot-starter|1.0|
 |druid-spring-boot-starter|1.0.31.04|
 
-## Example
+## Add cuisongliu's springboot to project
 
-
-    spring:
-      datasource:
-        url: xxx
-        username: xxx
-        password: xxx
-        druid:
-              filters: stat,wall,log4j
-              connection-properties:
-                - druid.stat.mergeSql=true
-                - druid.stat.slowSqlMillis=5000
-              filter:
-                enable: true
-                principal-session-name: session_admin
-                profile-enable: true
-                principal-cookie-name: session_admin
-                session-stat-enable: true
-              stat:
-                enable: true
-                aop-type: type,name
-                target-bean-type: com.cuisongliu.springboot.core.mapper.MyMapper
-                bean-names:
-                   - UserMapper
-                   - userMapper
+    1. add to project configure
+    2. application.java extends from SpringMvcConfig
+    3. application.java append to @ComponentScan and @MapperScan
+    
+    
+    1. 在项目中加入项目配置文件
+    2. 在springboot 的入口继承SpringMvcConfig
+    3. 在入口类加入ComponentScan和MapperScan配置
 
 ## Acknowledgments
 
