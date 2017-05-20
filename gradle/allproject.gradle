@@ -22,8 +22,9 @@
  * THE SOFTWARE.
  */
 allprojects {
+    apply from: "$rootDir/gradle/extra/ext.gradle"
     group 'com.cuisongliu'
-    version = '1.0'
+    version = "${safeVersion}"
     apply from: "$rootDir/gradle/extra/ext.gradle"
     repositories {
         mavenLocal()
