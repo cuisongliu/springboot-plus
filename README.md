@@ -97,7 +97,11 @@ Add the following dependency to your build.gradle:
 ## Acknowledgments
 
  [druid](https://github.com/alibaba/druid).
+ 
  [mapper](https://github.com/abel533/Mapper).
+ 
  [pagehelper](https://github.com/pagehelper/Mybatis-PageHelper)
+ 
  [OrderByHelper](https://github.com/abel533/OrderByHelper)
+ 
  [mybatis](https://github.com/mybatis/mybatis-3)
