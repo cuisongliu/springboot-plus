@@ -54,7 +54,7 @@ dependencies {
     compile "tk.mybatis:mapper-spring-boot-starter:${springBootTkMapperVersion}"
     compile "com.github.pagehelper:pagehelper-spring-boot-starter:${springBootPageHelperVersion}"
     compile "com.cuisongliu:orderbyhelper-spring-boot-starter:${springBootOrderbyHelperVersion}"
-    compile "com.cuisongliu:druid-spring-boot-starter:${druidVersion}.04"
+    compile "com.cuisongliu:druid-spring-boot-starter:${druidVersion}"
 
     testCompile "${springBootGroup}:${springBootArtifactId}test:${springBootVersion}"
 

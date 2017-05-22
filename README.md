@@ -36,7 +36,7 @@ Add the following dependency to your pom.xml:
     <dependency>
        <groupId>com.cuisongliu</groupId>
        <artifactId>springboot</artifactId>
-       <version>1.0.0</version>
+       <version>1.0.1</version>
      </dependency>
 
 ### gradle
@@ -81,7 +81,7 @@ Add the following dependency to your build.gradle:
 |mapper-spring-boot-starter|1.1.1|
 |pagehelper-spring-boot-starter|1.1.1|
 |orderbyhelper-spring-boot-starter|1.0|
-|druid-spring-boot-starter|1.0.31.04|
+|druid-spring-boot-starter|1.0.31.05|
 
 ## Add cuisongliu's springboot to project
 
@@ -99,12 +99,16 @@ Add the following dependency to your build.gradle:
 
 ## Acknowledgments
 
- [druid](https://github.com/alibaba/druid).
+ [druid](https://github.com/alibaba/druid)
  
- [mapper](https://github.com/abel533/Mapper).
+ [druid-starter](https://github.com/cuisongliu/druid-boot-starter)
+ 
+ [mapper](https://github.com/abel533/Mapper)
  
  [pagehelper](https://github.com/pagehelper/Mybatis-PageHelper)
  
  [OrderByHelper](https://github.com/abel533/OrderByHelper)
+ 
+ [OrderByHelper-starter](https://github.com/cuisongliu/orderbyhelper-boot-starter)
  
  [mybatis](https://github.com/mybatis/mybatis-3)
