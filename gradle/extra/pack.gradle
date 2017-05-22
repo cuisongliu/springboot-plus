@@ -99,7 +99,7 @@ uploadArchives {
             pom.withXml {
                 def root = asNode()
                 root.appendNode('url', "$projectLocation")
-                root.appendNode('description', "druid integration with springboot.")
+                root.appendNode('description', "springboot basic framework integration.")
                 root.appendNode('name', "$project.name")
                 root.appendNode('packaging', 'jar')
                 root.children().last() + pomConfig
