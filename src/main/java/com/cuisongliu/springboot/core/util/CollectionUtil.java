@@ -27,9 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by cuisongliu on 16-8-11.
+ * collection util
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-05-22 9:51
  */
-public class CollectionUtils {
+public class CollectionUtil {
 
     /**
      * null转成空列表
