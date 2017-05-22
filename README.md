@@ -81,7 +81,7 @@ Add the following dependency to your build.gradle:
 |mapper-spring-boot-starter|1.1.1|
 |pagehelper-spring-boot-starter|1.1.1|
 |orderbyhelper-spring-boot-starter|1.0|
-|druid-spring-boot-starter|1.0.31.05|
+|druid-spring-boot-starter|1.0.31.06|
 
 ## Add cuisongliu's springboot to project
 
