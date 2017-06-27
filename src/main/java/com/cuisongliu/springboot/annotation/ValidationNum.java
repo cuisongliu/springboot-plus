@@ -30,14 +30,15 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Validation
 public @interface ValidationNum {
     /**
      * 整数部分
+     * @return 整数
      */
     int integer();
     /**
      * 小数部分
+     * @return 小数
      */
     int floater();
 }

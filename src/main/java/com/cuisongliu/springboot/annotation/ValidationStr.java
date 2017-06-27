@@ -30,14 +30,13 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Validation
 public @interface ValidationStr {
     /**
-     * 最小长度
+     * @return 最小长度
      */
     int minlength() default 1;
     /**
-     * 最大长度
+     * @return 最大长度
      */
     int maxlength();
 }

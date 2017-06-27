@@ -299,4 +299,19 @@ public class StringUtil {
         buff.append(str);
         return buff.toString();
     }
+
+    /**
+     * 获取该位数最大值
+     * @param len
+     * @return
+     */
+    public static Integer getMaxSerial(int len) {
+        String strVal = "9";
+
+        for(int i = 1; i < len; ++i) {
+            strVal = strVal + "9";
+        }
+
+        return Integer.valueOf(strVal);
+    }
 }

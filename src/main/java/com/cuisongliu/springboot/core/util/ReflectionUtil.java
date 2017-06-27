@@ -1,31 +1,6 @@
-/*
- * The MIT License (MIT)
- *
- * Copyright (c) 2017 cuisongliu@qq.com
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
 package com.cuisongliu.springboot.core.util;
 
-
 import com.cuisongliu.springboot.annotation.FieldType;
-import com.cuisongliu.springboot.annotation.Validation;
 import com.cuisongliu.springboot.annotation.ValidationNum;
 import com.cuisongliu.springboot.annotation.ValidationStr;
 
@@ -149,16 +124,21 @@ public class ReflectionUtil {
         return new ArrayList<Field>(fieldSet);
     }
 
+    /**
+     * @param object 需要验证的实体
+     * @param fieldName 字段名称
+     * @return
+     */
     public static String isValidation(Object object, String fieldName) {
         Field field = getDeclaredField(object, fieldName);
         if (field == null) {
             //字段不存在
             return "";
         } else {
-           com.cuisongliu.springboot.annotation.Field f = field.getAnnotation(com.cuisongliu.springboot.annotation.Field.class);
+            com.cuisongliu.springboot.annotation.Field f = field.getAnnotation(com.cuisongliu.springboot.annotation.Field.class);
             if (f != null) {
                 String name = f.name();//名称
-                Class clazz = field.getClass();
+                Class clazz = field.getType();
                 FieldType type = f.value();
                 if (type == FieldType.NOTNULLABLE) {
                     String tips = "不能为空";
@@ -176,24 +156,25 @@ public class ReflectionUtil {
                     }
 
                 }
-                Validation val = field.getAnnotation(Validation.class);
-                if(val !=null){
-                    if (clazz.equals(String.class)) {
-                        //字符串
-                        String str = getFieldValue(object, fieldName, String.class);
-                        ValidationStr fstr = field.getAnnotation(ValidationStr.class);
-                        if (str.length() > fstr.maxlength()) return name + "的最大长度为" + fstr.maxlength() + ".";
-                    } else if (clazz.equals(BigDecimal.class)) {
-                        //数字
-                        BigDecimal bg = getFieldValue(object, fieldName, BigDecimal.class);
-                        ValidationNum fnum = field.getAnnotation(ValidationNum.class);
-                        int integet = fnum.integer();
-                        int floater = fnum.floater();
-                        if (numberValidation(bg, integet, floater))
-                            return name + "最多输入" + integet + "位整数和" + floater + "位小数.";
-                    }
+                ValidationNum numval = field.getAnnotation(ValidationNum.class);
+                ValidationStr strval = field.getAnnotation(ValidationStr.class);
+                if (strval != null && clazz.equals(String.class)) {
+                    //字符串
+                    String str = getFieldValue(object, fieldName, String.class);
+                    ValidationStr fstr = field.getAnnotation(ValidationStr.class);
+                    if (StringUtil.isEmpty(str) && str.length() > fstr.maxlength())
+                        return name + "的最大长度为" + fstr.maxlength() + ".";
+                } else if (numval != null && clazz.equals(BigDecimal.class)) {
+                    //数字
+                    BigDecimal bg = getFieldValue(object, fieldName, BigDecimal.class);
+                    ValidationNum fnum = field.getAnnotation(ValidationNum.class);
+                    int integet = fnum.integer();
+                    int floater = fnum.floater();
+                    if (bg!=null && numberValidation(bg, integet, floater))
+                        return name + "最多输入" + integet + "位正整数和" + floater + "位小数.";
                 }
             }
+
         }
         return "";
     }
@@ -222,7 +203,7 @@ public class ReflectionUtil {
             //将 object 中 field 所代表的值 设置为 value
             field.set(object, value);
         } catch (Exception e) {
-           //e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
@@ -256,18 +237,18 @@ public class ReflectionUtil {
     /**
      * 直接读取对象的属性值, 忽略 private/protected 修饰符, 也不经过 getter
      *
-     * @param object    : 子类对象
+     * @param object : 子类对象
      * @return : 父类中的属性值
      */
 
-    public static Map<String,Object> objToMap(Object object) {
-        Map<String,Object> map = new HashMap<String, Object>();
+    public static Map<String, Object> objToMap(Object object) {
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
             List<Field> fields = getDeclaredFieldNames(object.getClass());
-            for (Field f:fields){
+            for (Field f : fields) {
                 //抑制Java对其的检查
                 f.setAccessible(true);
-                map.put(f.getName(),f.get(object));
+                map.put(f.getName(), f.get(object));
             }
         } catch (Exception e) {
             //e.printStackTrace() ;
@@ -320,5 +301,4 @@ public class ReflectionUtil {
         }
         return null;
     }
-
 }

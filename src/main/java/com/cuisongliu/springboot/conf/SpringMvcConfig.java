@@ -79,7 +79,7 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 设置xssFilter
-     *
+     * @return FilterRegistrationBean
      */
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
