@@ -36,7 +36,7 @@ Add the following dependency to your pom.xml:
     <dependency>
        <groupId>com.cuisongliu</groupId>
        <artifactId>springboot</artifactId>
-       <version>1.0.3</version>
+       <version>1.0.4</version>
      </dependency>
 
 ### gradle
@@ -81,7 +81,7 @@ Add the following dependency to your build.gradle:
 |mapper-spring-boot-starter|1.1.1|
 |pagehelper-spring-boot-starter|1.1.1|
 |orderbyhelper-spring-boot-starter|1.0.2|
-|druid-spring-boot-starter|1.0.31.06|
+|druid-spring-boot-starter|1.1.0|
 
 ## Add cuisongliu's springboot to project
 
