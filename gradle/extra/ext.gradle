@@ -24,7 +24,7 @@
 
 //定义版本号
 ext {
-    safeVersion = "1.0.4"
+    safeVersion = "1.0.5"
     junitVersion = "4.11"
     springBootVersion = "1.5.3.RELEASE"
     springBootMybatisVersion = "1.3.0"

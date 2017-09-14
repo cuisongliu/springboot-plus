@@ -55,7 +55,6 @@ import java.util.Map;
  * @since JDK 7.0+
  */
 @Controller
-@RequestMapping(value = "error")
 @EnableConfigurationProperties({ServerProperties.class})
 public class ExceptionController implements ErrorController {
 
@@ -81,7 +80,7 @@ public class ExceptionController implements ErrorController {
      * @param response
      * @return modelAndView
      */
-    @RequestMapping(produces = "text/html",value = "401")
+    @RequestMapping(value = "/error/401")
     public ModelAndView errorHtml401(HttpServletRequest request,
                                      HttpServletResponse response) {
         return new ModelAndView("error/401");
@@ -93,7 +92,7 @@ public class ExceptionController implements ErrorController {
      * @param response
      * @return modelAndView
      */
-    @RequestMapping(produces = "text/html",value = "404")
+    @RequestMapping(value = "/error/404")
     public ModelAndView errorHtml404(HttpServletRequest request,
                                      HttpServletResponse response) {
         response.setStatus(getStatus(request).value());
@@ -107,7 +106,7 @@ public class ExceptionController implements ErrorController {
      * @param request
      * @return responseEntity
      */
-    @RequestMapping(value = "404")
+    @RequestMapping(value = "/error/json/404")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> error404(HttpServletRequest request) {
         Map<String, Object> body = getErrorAttributes(request,
@@ -123,7 +122,7 @@ public class ExceptionController implements ErrorController {
      * @param response
      * @return modelAndView
      */
-    @RequestMapping(produces = "text/html",value = "500")
+    @RequestMapping(value = "/error/500")
     public ModelAndView errorHtml500(HttpServletRequest request,
                                      HttpServletResponse response) {
         response.setStatus(getStatus(request).value());
@@ -138,7 +137,7 @@ public class ExceptionController implements ErrorController {
      * @param request
      * @return responseEntity
      */
-    @RequestMapping(value = "500")
+    @RequestMapping(value = "/error/json/500")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> error500(HttpServletRequest request) {
         Map<String, Object> body = getErrorAttributes(request,

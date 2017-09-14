@@ -31,6 +31,7 @@ import com.cuisongliu.springboot.converters.StringToDateConverter;
 import com.cuisongliu.springboot.filter.XssFilter;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.support.FormattingConversionServiceFactoryBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
@@ -79,6 +81,7 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 设置xssFilter
+     *
      * @return FilterRegistrationBean
      */
     @Bean
@@ -158,9 +161,10 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 设置文件的相关配置
+     *
      * @param multipartConfigFactory
      */
-    protected abstract  void configMultipart(MultipartConfigFactory multipartConfigFactory);
+    protected abstract void configMultipart(MultipartConfigFactory multipartConfigFactory);
 
     @Bean
     public ConversionService conversionService() {
@@ -192,20 +196,23 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
                 //设置错误页面
-                setErrorPages(container);
+                Boolean isJson = setErrorPages(container);
+                String prefix = "";
+                if (isJson) prefix="json/";
+                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/"+prefix+"404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/"+prefix+"404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/"+prefix+"500"));
+                container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/"+prefix+"401"));
+                container.addErrorPages(new ErrorPage(Throwable.class, "/error/"+prefix+"500"));
             }
         };
     }
 
     /**
      * 设置错误页面的信息<br/>
-     * <code>container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-     * container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-     * container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
-     * container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401"));
-     * container.addErrorPages(new ErrorPage(Throwable.class,"/error/500"));</code>
      *
      * @param container
+     * @return  是否为json
      */
-    protected abstract void setErrorPages(ConfigurableEmbeddedServletContainer container);
+    protected abstract Boolean setErrorPages(ConfigurableEmbeddedServletContainer container);
 }
