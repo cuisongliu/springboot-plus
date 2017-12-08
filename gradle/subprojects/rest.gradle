@@ -1,0 +1,3 @@
+dependencies {
+    compile "io.jsonwebtoken:jjwt:${jjwtVersion}"
+}

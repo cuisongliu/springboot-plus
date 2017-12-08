@@ -24,8 +24,6 @@
 apply from: "$rootDir/gradle/extra/plugins.gradle"
 apply from: "$rootDir/gradle/extra/compile.gradle"
 apply from: "$rootDir/gradle/extra/pack.gradle"
-def springBootGroup = "org.springframework.boot"
-def springBootArtifactId = "spring-boot-starter-"
 dependencies {
     // 依赖maven中不存在的jar
     ext.jarTree = fileTree(dir: 'libs', include: '**/*.jar')
@@ -37,7 +35,6 @@ dependencies {
     compile "${springBootGroup}:${springBootArtifactId}web:${springBootVersion}"
     compile "${springBootGroup}:${springBootArtifactId}jdbc:${springBootVersion}"
     compile "${springBootGroup}:${springBootArtifactId}aop:${springBootVersion}"
-    compile "${springBootGroup}:${springBootArtifactId}thymeleaf:${springBootVersion}"
 
     compile "cglib:cglib-nodep:${cglibVersion}"
     compile "commons-codec:commons-codec:${codecVersion}"
@@ -46,16 +43,18 @@ dependencies {
     compile "commons-lang:commons-lang:${commonsLangVersion}"
 
     compile "org.jsoup:jsoup:${jsoupVersion}"
-
     compile "com.alibaba:fastjson:${fastJsonVersion}"
-
     compile "mysql:mysql-connector-java:${mysqlVersion}"
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${springBootMybatisVersion}"
     compile "tk.mybatis:mapper-spring-boot-starter:${springBootTkMapperVersion}"
     compile "com.github.pagehelper:pagehelper-spring-boot-starter:${springBootPageHelperVersion}"
     compile "com.cuisongliu:orderbyhelper-spring-boot-starter:${springBootOrderbyHelperVersion}"
-    compile "com.cuisongliu:druid-spring-boot-starter:${druidVersion}"
 
+    compile "com.alibaba:druid:${druidVersion}"
+    compile "com.cuisongliu:druid-spring-boot-starter:${springBootDruidVersion}"
+
+    //configure
+    optional "${springBootGroup}:spring-boot-configuration-processor:${springBootVersion}"
     testCompile "${springBootGroup}:${springBootArtifactId}test:${springBootVersion}"
 
 }

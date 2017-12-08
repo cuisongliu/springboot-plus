@@ -35,8 +35,8 @@ Add the following dependency to your pom.xml:
 
     <dependency>
        <groupId>com.cuisongliu</groupId>
-       <artifactId>springboot</artifactId>
-       <version>1.0.4</version>
+       <artifactId>springboot-puls</artifactId>
+       <version>2.0</version>
      </dependency>
 
 ### gradle
@@ -58,42 +58,19 @@ Add the following nexus repository(fix china access slow problem,already append 
 
 Add the following dependency to your build.gradle:
     
-    compile "com.cuisongliu:druid-spring-boot-starter:1+"
+    compile "com.cuisongliu:springboot-plus:2+"
     
-### Depends on the framework and version
-
-
-| dependencies | version |
-| :------|:------|
-|spring-boot-starter-web|1.5.3.RELEASE|
-|spring-boot-starter-jdbc|1.5.3.RELEASE|
-|spring-boot-starter-aop|1.5.3.RELEASE|
-|spring-boot-starter-thymeleaf|1.5.3.RELEASE|
-|cglib-nodep|3.2.5|
-|commons-codec|1.9|
-|commons-beanutils-core|1.8.3|
-|commons-collections|3.2.2|
-|commons-lang|2.6|
-|jsoup|1.10.2|
-|fastjson|1.2.32|
-|mysql-connector-java|5.1.42|
-|mybatis-spring-boot-starter|1.3.0|
-|mapper-spring-boot-starter|1.1.1|
-|pagehelper-spring-boot-starter|1.1.1|
-|orderbyhelper-spring-boot-starter|1.0.2|
-|druid-spring-boot-starter|1.1.0|
-
 ## Add cuisongliu's springboot to project
 
     1. add to project configure
     2. application.java extends from SpringMvcConfig
     3. application.java append to @ComponentScan and @MapperScan
-    4.  @ComponentScan and @MapperScan not in package com.cuisongliu
+    4.  @ComponentScan and @MapperScan not set package com.cuisongliu prefix
     
     1. 在项目中加入项目配置文件
     2. 在springboot 的入口继承SpringMvcConfig
     3. 在入口类加入ComponentScan和MapperScan配置
-    4.  @ComponentScan 和 @MapperScan  设置不扫描com.cuisongliu 
+    4.  @ComponentScan 和 @MapperScan  不能设置为com.cuisongliu开头
 
 > [Example for cuisongliu's springboot](https://github.com/cuisongliu/springboot-integration)
 

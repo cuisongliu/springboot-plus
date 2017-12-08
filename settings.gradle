@@ -1,1 +1,4 @@
 rootProject.name = 'springboot-plus'
+include 'springboot-plus'
+include 'springboot-plus-web'
+include 'springboot-plus-rest'
