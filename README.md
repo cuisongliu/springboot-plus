@@ -36,7 +36,7 @@ Add the following dependency to your pom.xml:
     <dependency>
        <groupId>com.cuisongliu</groupId>
        <artifactId>springboot-puls</artifactId>
-       <version>2.0</version>
+       <version>2.0+</version>
      </dependency>
 
 ### gradle
