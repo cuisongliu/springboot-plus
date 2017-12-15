@@ -110,7 +110,7 @@ publishing {
 
                 root.appendNode('url', "$projectLocation")
                 root.appendNode('name', "$project.name")
-                root.appendNode('description', "beetl integration with springboot.")
+                root.appendNode('description', "springboot integration with springboot.")
                 if (project.name == rootProject.name){
                     root.appendNode('packaging', "pom")
                 }else {

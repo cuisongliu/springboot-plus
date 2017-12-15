@@ -33,6 +33,7 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -43,11 +44,18 @@ import java.util.Properties;
  */
 public abstract class SpringMvcConfig extends SpringMvcAbstractConfig {
 
+    /**
+     * addResourceHandlers 方法的映射关系
+     * @return resource 映射关系
+     */
+    protected abstract Map<String,String> preResourceHandlers();
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+        Map<String,String> resourceMap = preResourceHandlers();
+        for (Map.Entry<String, String> entry:resourceMap.entrySet()){
+            registry.addResourceHandler(entry.getKey()).addResourceLocations(entry.getValue());
+        }
         super.addResourceHandlers(registry);
     }
 
