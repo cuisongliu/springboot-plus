@@ -25,7 +25,6 @@ apply from: "$rootDir/gradle/allproject.gradle"
 apply from: "$rootDir/gradle/subprojects.gradle"
 task printEnv {
     println "当前的工程名称为:[$project.name]"
-    println "输出nexus的帐号信息为:[$nexusUsername],[$nexusPassword]"
     repositories.each {
         println "repository: ${it.name} ('${it.url}')"
     }
