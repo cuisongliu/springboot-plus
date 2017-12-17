@@ -35,43 +35,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = SpringWebProperties.PROPERTIES_PREFI)
 public class SpringWebProperties {
-    public final static String PROPERTIES_PREFI ="mars.web";
+    public final static String PROPERTIES_PREFI = "mars.web";
 
     /**
      * session验证
      */
-    private int  sessionValidationInterval=0;
+    private String rememberMeCookieName = "rememberMe";
 
     /**
      * session超时
      */
-    private int  sessionInvalidateTime=0;
+    private int rememberMeCookieDays = 7;
 
-    /**
-     * 开启多机部署
-     */
-    private boolean enableMulti = true;
     /**
      * shiro redis key
      */
     private String shiroRedisKey = "shiro_redis_cache:";
-
-
-    public int getSessionValidationInterval() {
-        return sessionValidationInterval;
-    }
-
-    public void setSessionValidationInterval(int sessionValidationInterval) {
-        this.sessionValidationInterval = sessionValidationInterval;
-    }
-
-    public int getSessionInvalidateTime() {
-        return sessionInvalidateTime;
-    }
-
-    public void setSessionInvalidateTime(int sessionInvalidateTime) {
-        this.sessionInvalidateTime = sessionInvalidateTime;
-    }
 
     public String getShiroRedisKey() {
         return shiroRedisKey;
@@ -81,11 +60,19 @@ public class SpringWebProperties {
         this.shiroRedisKey = shiroRedisKey;
     }
 
-    public boolean isEnableMulti() {
-        return enableMulti;
+    public String getRememberMeCookieName() {
+        return rememberMeCookieName;
     }
 
-    public void setEnableMulti(boolean enableMulti) {
-        this.enableMulti = enableMulti;
+    public void setRememberMeCookieName(String rememberMeCookieName) {
+        this.rememberMeCookieName = rememberMeCookieName;
+    }
+
+    public int getRememberMeCookieDays() {
+        return rememberMeCookieDays;
+    }
+
+    public void setRememberMeCookieDays(int rememberMeCookieDays) {
+        this.rememberMeCookieDays = rememberMeCookieDays;
     }
 }
