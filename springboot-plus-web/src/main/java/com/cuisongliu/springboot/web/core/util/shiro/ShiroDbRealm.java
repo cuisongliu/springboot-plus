@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf;
+package com.cuisongliu.springboot.web.core.util.shiro;
 /*
  * The MIT License (MIT)
  *
@@ -23,28 +23,33 @@ package com.cuisongliu.springboot.web.conf;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 
 /**
- * session多机部署
+ * shiro 认证工具
  *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2017-12-07 16:24
+ * @since 2017-12-18 0:08
  */
-@EnableConfigurationProperties(SpringWebProperties.class)
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800)  //session过期时间  如果部署多机环境,需要打开注释
-@ConditionalOnProperty(prefix = SpringWebProperties.PROPERTIES_PREFI, name = "enable-multi", havingValue = "true")
-public class SessionMultiConfig {
-    /**
-     * spring session管理器（多机环境）
-     */
-    @Bean
-    public ServletContainerSessionManager servletContainerSessionManager() {
-        return new ServletContainerSessionManager();
+public class ShiroDbRealm extends AuthorizingRealm {
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        return null;
+    }
+
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        return null;
+    }
+
+    @Override
+    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+        super.setCredentialsMatcher(credentialsMatcher);
     }
 }
