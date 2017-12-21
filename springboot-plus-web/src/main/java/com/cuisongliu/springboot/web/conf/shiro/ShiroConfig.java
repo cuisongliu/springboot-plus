@@ -23,6 +23,7 @@ package com.cuisongliu.springboot.web.conf.shiro;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
 import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
 import com.cuisongliu.springboot.web.core.redis.RedisManager;
 import com.cuisongliu.springboot.web.core.shiro.ShiroRedisCacheManager;
@@ -35,7 +36,6 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -65,11 +65,13 @@ import java.util.Map;
  */
 @Configuration
 @EnableRedisHttpSession
-@EnableConfigurationProperties({SpringWebShiroProperties.class,RedisProperties.class})
+@EnableConfigurationProperties({SpringWebProperties.class,SpringWebShiroProperties.class,RedisProperties.class})
 @Import({ShiroServerConfig.class,ShiroClientConfig.class})
 public class ShiroConfig {
     @Autowired
     private RedisProperties redisProperties;
+    @Autowired
+    private SpringWebProperties springWebProperties;
     @Autowired
     private SpringWebShiroProperties springWebShiroProperties;
     @Value("${spring.aop.proxy-target-class:false}")
@@ -189,8 +191,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager webSecurityManager,UserInfoFilter userInfoFilter){
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+    public ShiroFilterExtendsFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager webSecurityManager,UserInfoFilter userInfoFilter){
+        ShiroFilterExtendsFactoryBean shiroFilterFactoryBean = new ShiroFilterExtendsFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(webSecurityManager);
         Map<String,Filter> filterMap = new HashMap<>();
         if (springWebShiroProperties.getEnableServer()){
@@ -200,9 +202,12 @@ public class ShiroConfig {
         }
         filterMap.put("sysUser",userInfoFilter);
         shiroFilterFactoryBean.setFilters(filterMap);
-        shiroFilterFactoryBean.setSuccessUrl(springWebShiroProperties.getSuccessUrl());
-        shiroFilterFactoryBean.setLoginUrl(springWebShiroProperties.getLoginUrl());
-        shiroFilterFactoryBean.setUnauthorizedUrl(springWebShiroProperties.getUnauthorizedUrl());
+
+        String urlPrefix= shiroFilterFactoryBean.appCache.selectByAppKey(springWebProperties.getAppSuperKey()).getHttpLocal();
+        shiroFilterFactoryBean.setSuccessUrl(urlPrefix+springWebShiroProperties.getSuccessUrl());
+        shiroFilterFactoryBean.setLoginUrl(urlPrefix+springWebShiroProperties.getLoginUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl(urlPrefix+springWebShiroProperties.getUnauthorizedUrl());
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(springWebShiroProperties.getFilterChainDefinitions());
         return shiroFilterFactoryBean;
     }
