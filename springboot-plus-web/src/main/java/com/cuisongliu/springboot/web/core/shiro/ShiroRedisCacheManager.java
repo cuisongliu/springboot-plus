@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.util.shiro;
+package com.cuisongliu.springboot.web.core.shiro;
 /*
  * The MIT License (MIT)
  *
@@ -23,8 +23,8 @@ package com.cuisongliu.springboot.web.core.util.shiro;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.core.util.redis.RedisCache;
-import com.cuisongliu.springboot.web.core.util.redis.RedisManager;
+import com.cuisongliu.springboot.web.core.redis.RedisCache;
+import com.cuisongliu.springboot.web.core.redis.RedisManager;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;

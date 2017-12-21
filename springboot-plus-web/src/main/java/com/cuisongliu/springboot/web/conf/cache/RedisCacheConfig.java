@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf;
+package com.cuisongliu.springboot.web.conf.cache;
 /*
  * The MIT License (MIT)
  *
@@ -23,6 +23,7 @@ package com.cuisongliu.springboot.web.conf;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.web.conf.properties.SpringWebCacheProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,10 +36,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.DefaultRedisCachePrefix;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
@@ -46,20 +46,24 @@ import java.lang.reflect.Method;
 
 /**
  * redis缓存
- *
+ * spring.cache.type=Redis
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-07 19:24
  */
 @Configuration
 @EnableCaching
-@EnableConfigurationProperties({RedisProperties.class})
+@EnableConfigurationProperties({RedisProperties.class,SpringWebCacheProperties.class})
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Autowired
     private RedisProperties redisProperties;
 
+    @Autowired
+    private SpringWebCacheProperties springWebCacheProperties;
+
     @Bean
-    public KeyGenerator wiselyKeyGenerator() {
+    @Override
+    public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
             @Override
             public Object generate(Object o, Method method, Object... objects) {
@@ -75,7 +79,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public JedisConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+    public JedisConnectionFactory redisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setHostName(redisProperties.getHost());
         factory.setPort(redisProperties.getPort());
@@ -85,20 +89,23 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         return factory;
     }
 
+
+
     @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        cacheManager.setDefaultExpiration(10);  //设置 key-value 超时时间
+    @Override
+    public CacheManager cacheManager() {
+        StringRedisTemplate template = new StringRedisTemplate(redisConnectionFactory());
+        setSerializer(template);
+        template.afterPropertiesSet();
+        RedisCacheManager cacheManager = new RedisCacheManager(template);
+        cacheManager.setDefaultExpiration(springWebCacheProperties.getDefaultExpiration());
+        cacheManager.setLoadRemoteCachesOnStartup(springWebCacheProperties.isLoadRemoteCachesOnStartup());
+        cacheManager.setUsePrefix(springWebCacheProperties.isUsePrefix());
+        cacheManager.setCachePrefix(new DefaultRedisCachePrefix(springWebCacheProperties.getCachePrefix()));
+        cacheManager.setTransactionAware(springWebCacheProperties.isTransactionAware());
         return cacheManager;
     }
 
-    @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        setSerializer(template);    //设置序列化工具，就不必实现Serializable接口
-        template.afterPropertiesSet();
-        return template;
-    }
     @SuppressWarnings({"unchecked"})
     private void setSerializer(StringRedisTemplate template) {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);

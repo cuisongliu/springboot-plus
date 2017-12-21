@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.util.redis;
+package com.cuisongliu.springboot.web.core.redis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -195,7 +195,12 @@ public class RedisManager {
 	public void setConfig(JedisPoolConfig config) {
 		this.config = config;
 	}
-	
-	
-	
+
+	public int getExpire() {
+		return expire;
+	}
+
+	public void setExpire(int expire) {
+		this.expire = expire;
+	}
 }

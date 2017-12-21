@@ -1,6 +1,6 @@
-package com.cuisongliu.springboot.web.core.util.redis;
+package com.cuisongliu.springboot.web.core.redis;
 
-import com.cuisongliu.springboot.core.util.SerializeUtils;
+import com.cuisongliu.springboot.core.util.SerializeUtil;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.util.CollectionUtils;
@@ -60,7 +60,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 			String preKey = this.keyPrefix + key;
     		return preKey.getBytes();
     	}else{
-    		return SerializeUtils.serialize(key);
+    		return SerializeUtil.FastJsonSerialize.serialize(key);
     	}
 	}
  	
@@ -73,7 +73,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	        }else{
 	        	byte[] rawValue = cache.get(getByteKey(key));
 	        	@SuppressWarnings("unchecked")
-				V value = (V)SerializeUtils.deserialize(rawValue);
+				V value = (V) SerializeUtil.FastJsonSerialize.deserialize(rawValue);
 	        	return value;
 	        }
 		} catch (Throwable t) {
@@ -86,7 +86,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	public V put(K key, V value) throws CacheException {
 		logger.debug("根据key从存储 key [" + key + "]");
 		 try {
-			 	cache.set(getByteKey(key), SerializeUtils.serialize(value));
+			 	cache.set(getByteKey(key), SerializeUtil.FastJsonSerialize.serialize(value));
 	            return value;
 	        } catch (Throwable t) {
 	            throw new CacheException(t);
