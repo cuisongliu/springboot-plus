@@ -25,14 +25,18 @@ package com.cuisongliu.springboot.web.conf;
 
 import com.cuisongliu.springboot.conf.web.SpringMvcAbstractConfig;
 import com.cuisongliu.springboot.core.util.web.xss.XssFilter;
+import com.cuisongliu.springboot.web.core.aop.UserInfoMethodArgumentResolver;
 import com.cuisongliu.springboot.web.listener.ConfigListener;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -42,6 +46,7 @@ import java.util.Properties;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-06 21:05
  */
+@MapperScan(basePackages = {"com.cuisongliu.springboot.web.module.dao"})
 public abstract class SpringMvcConfig extends SpringMvcAbstractConfig {
 
     /**
@@ -103,4 +108,10 @@ public abstract class SpringMvcConfig extends SpringMvcAbstractConfig {
         return new ServletListenerRegistrationBean<>(new ConfigListener());
     }
 
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers){
+        super.addArgumentResolvers(argumentResolvers);
+        //获取UserInfo的方法
+        argumentResolvers.add(new UserInfoMethodArgumentResolver());
+    }
 }
