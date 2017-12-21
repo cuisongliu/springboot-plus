@@ -33,46 +33,32 @@ import org.springframework.context.annotation.Configuration;
  * @since 2017-12-06 21:19
  */
 @Configuration
-@ConfigurationProperties(prefix = SpringWebProperties.PROPERTIES_PREFI)
+@ConfigurationProperties(prefix = SpringWebProperties.PROPERTIES_PREFIX)
 public class SpringWebProperties {
-    public final static String PROPERTIES_PREFI = "mars.web";
+    public final static String PROPERTIES_PREFIX = "mars.web";
+    /**
+     *  设置APP_KEY
+     */
+    private String appKey = "shiro_redis";
 
     /**
-     * session验证
+     *  中心服务器的Key
      */
-    private String rememberMeCookieName = "rememberMe";
+    private String appSuperKey = "shiro_redis";
 
-    /**
-     * session超时
-     */
-    private int rememberMeCookieDays = 7;
-
-    /**
-     * shiro redis key
-     */
-    private String shiroRedisKey = "shiro_redis_cache:";
-
-    public String getShiroRedisKey() {
-        return shiroRedisKey;
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setShiroRedisKey(String shiroRedisKey) {
-        this.shiroRedisKey = shiroRedisKey;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 
-    public String getRememberMeCookieName() {
-        return rememberMeCookieName;
+    public String getAppSuperKey() {
+        return appSuperKey;
     }
 
-    public void setRememberMeCookieName(String rememberMeCookieName) {
-        this.rememberMeCookieName = rememberMeCookieName;
-    }
-
-    public int getRememberMeCookieDays() {
-        return rememberMeCookieDays;
-    }
-
-    public void setRememberMeCookieDays(int rememberMeCookieDays) {
-        this.rememberMeCookieDays = rememberMeCookieDays;
+    public void setAppSuperKey(String appSuperKey) {
+        this.appSuperKey = appSuperKey;
     }
 }
