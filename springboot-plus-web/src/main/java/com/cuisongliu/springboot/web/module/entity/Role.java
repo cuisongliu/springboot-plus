@@ -44,13 +44,13 @@ public class Role implements Serializable {
 	/**
 	 *  拥有的资源
 	 */
-	@Column(name = "resource_ids")
-	private String resourceIds;
+	@Column(name = "permission_ids")
+	private String permissionIds;
 	/**
 	 *  拥有的资源
 	 */
 	@Transient
-	private List<Long> resourceList;
+	private List<Long> permissionList;
 
 	/**
 	 * 序号
@@ -90,12 +90,12 @@ public class Role implements Serializable {
 		this.description = description;
 	}
 
-	public String getResourceIds() {
-		return resourceIds;
+	public String getPermissionIds() {
+		return permissionIds;
 	}
 
-	public void setResourceIds(String resourceIds) {
-		this.resourceIds = resourceIds;
+	public void setPermissionIds(String permissionIds) {
+		this.permissionIds = permissionIds;
 	}
 
 	public Boolean getAvailable() {
@@ -106,24 +106,24 @@ public class Role implements Serializable {
 		this.available = available;
 	}
 
-	public List<Long> getResourceList() {
-		List<Long> resourceListSuper = new ArrayList<>();
-		if(StringUtil.isNotEmpty(this.getResourceIds())){
-			String[] resourceIdStr = this.getResourceIds().split(SystemConstant.ROLE_SPLIT);
-			for(String resourceId : resourceIdStr) {
-				if(StringUtils.isEmpty(resourceId)) {
+	public List<Long> getPermissionList() {
+		List<Long> permissionListSuper = new ArrayList<>();
+		if(StringUtil.isNotEmpty(this.getPermissionIds())){
+			String[] permissionIdStr = this.getPermissionIds().split(SystemConstant.SPLIT);
+			for(String permissionId : permissionIdStr) {
+				if(StringUtils.isEmpty(permissionId)) {
 					continue;
 				}
-				resourceListSuper.add(Long.valueOf(resourceId));
+				permissionListSuper.add(Long.valueOf(permissionId));
 			}
 		}
-		this.resourceList= resourceListSuper;
-		return this.resourceList;
+		this.permissionList= permissionListSuper;
+		return this.permissionList;
 	}
 
-	public void setResourceList(List<Long> resourceList) {
-		this.resourceIds=CollectionUtil.join(resourceList,SystemConstant.ROLE_SPLIT);
-		this.resourceList = resourceList;
+	public void setPermissionList(List<Long> permissionList) {
+		this.permissionIds=CollectionUtil.join(permissionList,SystemConstant.SPLIT);
+		this.permissionList = permissionList;
 	}
 
 	public Integer getNum() {

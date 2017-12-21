@@ -84,7 +84,7 @@ public class Authorization implements Serializable {
     public List<Long> getRoleList() {
         List<Long> roleListSuper = new ArrayList<>();
         if(StringUtil.isNotEmpty(this.getRoleIds())){
-            String[] roleIdStr = this.getRoleIds().split(SystemConstant.ROLE_SPLIT);
+            String[] roleIdStr = this.getRoleIds().split(SystemConstant.SPLIT);
             for(String roleId : roleIdStr) {
                 if(StringUtils.isEmpty(roleId)) {
                     continue;
@@ -97,7 +97,7 @@ public class Authorization implements Serializable {
     }
 
     public void setRoleList(List<Long> roleList) {
-        this.roleIds = CollectionUtil.join(roleList, SystemConstant.ROLE_SPLIT);
+        this.roleIds = CollectionUtil.join(roleList, SystemConstant.SPLIT);
         this.roleList = roleList;
     }
 

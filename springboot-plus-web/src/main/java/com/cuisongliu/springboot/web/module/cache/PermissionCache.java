@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.service;
+package com.cuisongliu.springboot.web.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -24,15 +24,9 @@ package com.cuisongliu.springboot.web.module.service;
  */
 
 import com.cuisongliu.springboot.core.biz.BaseBiz;
-import com.cuisongliu.springboot.web.module.dao.AppDAO;
-import com.cuisongliu.springboot.web.module.entity.App;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cuisongliu.springboot.web.module.entity.Permission;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * app service
@@ -41,19 +35,8 @@ import java.util.List;
  * @since 2017-12-20 17:49
  */
 @Service
-@CacheConfig(cacheNames = "cache_app")
-public class AppService extends BaseBiz<App> {
+@CacheConfig(cacheNames = CacheConstant.CACHE_PERMISSION)
+public class PermissionCache extends BaseBiz<Permission> {
 
-    @Autowired
-    private AppDAO appDAO;
 
-    @Transactional(readOnly = true)
-    @Cacheable(key = "#appKey")
-    public App selectByAppKey(String appKey){
-        App app = new App();
-        app.setAppKey(appKey);
-        app.setAvailable(Boolean.TRUE);
-        List<App> apps =  appDAO.select(app);
-        return apps.get(0);
-    }
 }

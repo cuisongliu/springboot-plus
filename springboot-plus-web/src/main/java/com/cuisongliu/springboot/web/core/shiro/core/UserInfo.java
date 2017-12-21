@@ -1,6 +1,7 @@
 package com.cuisongliu.springboot.web.core.shiro.core;
 
 import com.cuisongliu.springboot.web.module.entity.User;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Set;
 
@@ -10,6 +11,11 @@ import java.util.Set;
  * @author jerry
  */
 public class UserInfo  extends User {
+
+    public  UserInfo(User user){
+        BeanUtils.copyProperties(user,this);
+    }
+
     private Set<String> roles;
     private Set<String> permissions;
 

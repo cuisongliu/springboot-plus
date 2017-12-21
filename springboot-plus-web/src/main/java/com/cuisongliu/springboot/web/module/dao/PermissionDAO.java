@@ -1,6 +1,6 @@
 package com.cuisongliu.springboot.web.module.dao;
 
-import com.cuisongliu.springboot.web.module.entity.Resource;
+import com.cuisongliu.springboot.web.module.entity.Permission;
 import tk.mybatis.mapper.common.MyMapper;
 
 /**
@@ -11,6 +11,6 @@ import tk.mybatis.mapper.common.MyMapper;
  * @author cuijinrui
  * @since  2017年12月19日 11:02:20
  */
-public interface ResourceDAO extends MyMapper<Resource> {
+public interface PermissionDAO extends MyMapper<Permission> {
 
 }

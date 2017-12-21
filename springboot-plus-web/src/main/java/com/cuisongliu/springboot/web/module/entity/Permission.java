@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author cuijinrui
  * @since 2017-07-11
  */
-@Table(name="s_resource")
-public class Resource implements Serializable {
+@Table(name="s_permission")
+public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
