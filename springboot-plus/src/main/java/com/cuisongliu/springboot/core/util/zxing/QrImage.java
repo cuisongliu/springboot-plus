@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.util.zxing;
+package com.cuisongliu.springboot.core.util.zxing;
 
 /**
  * 二维码图片对象

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cuisongliu.springboot.web.core.util.zxing;
+package com.cuisongliu.springboot.core.util.zxing;
 
 import com.google.zxing.common.BitMatrix;
 

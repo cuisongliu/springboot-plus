@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cuisongliu.springboot.web.core.util.zxing;
+package com.cuisongliu.springboot.core.util.zxing;
 
 import java.awt.image.BufferedImage;
 
