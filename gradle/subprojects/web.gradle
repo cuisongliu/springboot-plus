@@ -1,7 +1,5 @@
 dependencies {
     compile "com.github.penggle:kaptcha:${kaptchaVersion}"
-    compile "com.google.zxing:core:${zxingVersion}"
-    compile "com.google.zxing:javase:${zxingVersion}"
     compile "com.ibeetl:beetl:${beetlVersion}"
     compile "com.cuisongliu:beetl-spring-boot-starter:${springBootBeetlVersion}"
 

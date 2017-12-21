@@ -32,6 +32,8 @@ dependencies {
     compile "commons-beanutils:commons-beanutils-core:${beanUtilsVersion}"
     compile "commons-collections:commons-collections:${collectionsVersion}"
     compile "commons-lang:commons-lang:${commonsLangVersion}"
+    compile "com.google.zxing:core:${zxingVersion}"
+    compile "com.google.zxing:javase:${zxingVersion}"
 
     compile "org.jsoup:jsoup:${jsoupVersion}"
     compile "com.alibaba:fastjson:${fastJsonVersion}"

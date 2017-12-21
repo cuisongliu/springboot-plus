@@ -32,7 +32,7 @@ ext {
     springBootPageHelperVersion = "1.1.1"
     springBootOrderbyHelperVersion = "1.0.2"
     beetlVersion="2.7.24"
-    springBootBeetlVersion="1+"
+    springBootBeetlVersion="1.4"
     shiroVersion="1.4.0"
     ehcacheVersion="3.3.1"
     ehcacheCoreVersion="2.6.11"
