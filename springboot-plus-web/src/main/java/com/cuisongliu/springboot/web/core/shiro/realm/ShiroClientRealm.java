@@ -23,13 +23,9 @@ package com.cuisongliu.springboot.web.core.shiro.realm;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * shiro 认证工具
@@ -39,16 +35,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ShiroClientRealm extends ShiroAbstractRealm {
 
-    @Autowired
-    private SpringWebShiroProperties springWebShiroProperties;
 
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
-    }
+
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return null;
+        //永远不会被调用
+        throw new UnsupportedOperationException("永远不会被调用");
     }
 }

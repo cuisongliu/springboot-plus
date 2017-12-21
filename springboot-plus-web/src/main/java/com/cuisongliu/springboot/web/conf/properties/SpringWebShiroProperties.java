@@ -26,6 +26,9 @@ package com.cuisongliu.springboot.web.conf.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * spring boot 额外的配置文件
  *
@@ -76,6 +79,24 @@ public class SpringWebShiroProperties {
      * shiro redis key
      */
     private String redisCacheKey = "shiro_redis#shiro:";
+
+    /**
+     *  过滤filter
+     */
+    private Map<String,String> filterChainDefinitions = new HashMap<>();
+
+    /**
+     * 返回成功页面
+     */
+    private String successUrl = "/";
+    /**
+     * 返回登录页面
+     */
+    private String loginUrl = "/login";
+    /**
+     * 返回未授权页面
+     */
+    private String unauthorizedUrl = "/unauthorized";
 
     public Boolean getEnableRememberMe() {
         return enableRememberMe;
@@ -139,5 +160,37 @@ public class SpringWebShiroProperties {
 
     public void setRedisCacheKey(String redisCacheKey) {
         this.redisCacheKey = redisCacheKey;
+    }
+
+    public Map<String, String> getFilterChainDefinitions() {
+        return filterChainDefinitions;
+    }
+
+    public void setFilterChainDefinitions(Map<String, String> filterChainDefinitions) {
+        this.filterChainDefinitions = filterChainDefinitions;
+    }
+
+    public String getSuccessUrl() {
+        return successUrl;
+    }
+
+    public void setSuccessUrl(String successUrl) {
+        this.successUrl = successUrl;
+    }
+
+    public String getLoginUrl() {
+        return loginUrl;
+    }
+
+    public void setLoginUrl(String loginUrl) {
+        this.loginUrl = loginUrl;
+    }
+
+    public String getUnauthorizedUrl() {
+        return unauthorizedUrl;
+    }
+
+    public void setUnauthorizedUrl(String unauthorizedUrl) {
+        this.unauthorizedUrl = unauthorizedUrl;
     }
 }

@@ -26,6 +26,8 @@ package com.cuisongliu.springboot.web.conf.shiro;
 import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
 import com.cuisongliu.springboot.web.core.redis.RedisManager;
 import com.cuisongliu.springboot.web.core.shiro.ShiroRedisCacheManager;
+import com.cuisongliu.springboot.web.core.shiro.filter.ClientAuthenticationFilter;
+import com.cuisongliu.springboot.web.core.shiro.filter.ServerFormAuthenticationFilter;
 import com.cuisongliu.springboot.web.core.shiro.filter.UserInfoFilter;
 import com.cuisongliu.springboot.web.core.shiro.realm.ShiroAbstractRealm;
 import org.apache.shiro.cache.CacheManager;
@@ -33,6 +35,8 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -48,6 +52,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Import;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+
+import javax.servlet.Filter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * shiro config
@@ -164,5 +172,38 @@ public class ShiroConfig {
     @Bean
     public UserInfoFilter userInfoFilter(){
         return new UserInfoFilter();
+    }
+
+    public ServerFormAuthenticationFilter serverAuthenticationFilter(){
+        ServerFormAuthenticationFilter filter = new ServerFormAuthenticationFilter();
+        if (springWebShiroProperties.getEnableRememberMe()){
+            filter.setRememberMeParam(FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
+        }
+        filter.setUsernameParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
+        filter.setPasswordParam(FormAuthenticationFilter.DEFAULT_PASSWORD_PARAM);
+        return filter;
+    }
+
+    public ClientAuthenticationFilter clientAuthenticationFilter(){
+        return  new ClientAuthenticationFilter();
+    }
+
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager webSecurityManager,UserInfoFilter userInfoFilter){
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(webSecurityManager);
+        Map<String,Filter> filterMap = new HashMap<>();
+        if (springWebShiroProperties.getEnableServer()){
+            filterMap.put("authc",serverAuthenticationFilter());
+        }else {
+            filterMap.put("authc",clientAuthenticationFilter());
+        }
+        filterMap.put("sysUser",userInfoFilter);
+        shiroFilterFactoryBean.setFilters(filterMap);
+        shiroFilterFactoryBean.setSuccessUrl(springWebShiroProperties.getSuccessUrl());
+        shiroFilterFactoryBean.setLoginUrl(springWebShiroProperties.getLoginUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl(springWebShiroProperties.getUnauthorizedUrl());
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(springWebShiroProperties.getFilterChainDefinitions());
+        return shiroFilterFactoryBean;
     }
 }

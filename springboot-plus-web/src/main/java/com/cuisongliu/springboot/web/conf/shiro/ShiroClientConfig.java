@@ -24,7 +24,6 @@ package com.cuisongliu.springboot.web.conf.shiro;
  */
 
 import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
-import com.cuisongliu.springboot.web.core.shiro.filter.ClientAuthenticationFilter;
 import com.cuisongliu.springboot.web.core.shiro.realm.ShiroAbstractRealm;
 import com.cuisongliu.springboot.web.core.shiro.realm.ShiroClientRealm;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -48,8 +47,5 @@ public class ShiroClientConfig {
         return  new ShiroClientRealm();
     }
 
-    @Bean
-    public ClientAuthenticationFilter clientAuthenticationFilter(){
-        return  new ClientAuthenticationFilter();
-    }
+
 }

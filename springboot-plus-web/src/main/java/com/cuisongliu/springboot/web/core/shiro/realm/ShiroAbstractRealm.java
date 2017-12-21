@@ -23,8 +23,14 @@ package com.cuisongliu.springboot.web.core.shiro.realm;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
 import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
+import com.cuisongliu.springboot.web.core.shiro.core.UserInfo;
+import com.cuisongliu.springboot.web.module.cache.UserCache;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -35,5 +41,25 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class ShiroAbstractRealm extends AuthorizingRealm{
     @Autowired
-    protected SpringWebShiroProperties springWebProperties;
+    protected SpringWebShiroProperties springWebShiroProperties;
+    @Autowired
+    protected SpringWebProperties springWebProperties;
+    @Autowired
+    protected UserCache userCache;
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+
+        String username = (String) principalCollection.getPrimaryPrincipal();
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        String appKey  = "";
+        if (springWebShiroProperties.getEnableServer()){
+            appKey  = springWebProperties.getAppSuperKey();
+        }else {
+            appKey  = springWebProperties.getAppKey();
+        }
+        UserInfo userInfo = userCache.selectUserInfoByUsername(appKey,username);
+        authorizationInfo.setRoles(userInfo.getRoles());
+        authorizationInfo.setStringPermissions(userInfo.getPermissions());
+        return authorizationInfo;
+    }
 }

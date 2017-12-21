@@ -24,10 +24,8 @@ package com.cuisongliu.springboot.web.conf.shiro;
  */
 
 import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
-import com.cuisongliu.springboot.web.core.shiro.filter.ServerFormAuthenticationFilter;
 import com.cuisongliu.springboot.web.core.shiro.realm.ShiroAbstractRealm;
 import com.cuisongliu.springboot.web.core.shiro.realm.ShiroServerRealm;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -49,17 +47,6 @@ public class ShiroServerConfig {
     @Bean
     public ShiroAbstractRealm realm(){
         return  new ShiroServerRealm();
-    }
-
-    @Bean
-    public ServerFormAuthenticationFilter formAuthenticationFilter(){
-        ServerFormAuthenticationFilter filter = new ServerFormAuthenticationFilter();
-        if (springWebShiroProperties.getEnableRememberMe()){
-            filter.setRememberMeParam(FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
-        }
-        filter.setUsernameParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);
-        filter.setPasswordParam(FormAuthenticationFilter.DEFAULT_PASSWORD_PARAM);
-        return filter;
     }
 
 
