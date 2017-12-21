@@ -23,7 +23,7 @@ public class OperationLog implements Serializable {
      * 主键
      */
     @Id
-    private Integer id;
+    private Long id;
     /**
      * 日志类型
      */
@@ -63,11 +63,11 @@ public class OperationLog implements Serializable {
     private String message;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
