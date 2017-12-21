@@ -57,10 +57,12 @@ public class SerialNoTools extends BaseBiz<SerialNo> {
         serialTypeQuery.setState(1);
         List<SerialType> listBillType = serialTypeDAO.select(serialTypeQuery);
 
-        if (listBillType == null || listBillType.size() == 0)
+        if (listBillType == null || listBillType.size() == 0){
             throw new RuntimeException("没有维护该单据信息:" + serialTypeCode);
-        if (listBillType.size() > 1)
+        }
+        if (listBillType.size() > 1){
             throw new RuntimeException("返回多个结果集:" + serialTypeCode);
+        }
         SerialType serialType = listBillType.get(0);
         // 获取serialType的前缀
         result.append(serialType.getSerialTypePrefix());

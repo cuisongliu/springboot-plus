@@ -7,7 +7,7 @@ import javax.persistence.Table;
 @Table(name = "s_serial_type")
 public class SerialType {
     @Id
-    private Integer id;
+    private Long id;
 
     /**
      * 编码唯一非空
@@ -52,14 +52,14 @@ public class SerialType {
     /**
      * @return id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
