@@ -25,7 +25,7 @@ package com.cuisongliu.springboot.web.core.shiro.filter;
 
 import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
 import com.cuisongliu.springboot.web.core.constant.SystemConstant;
-import com.cuisongliu.springboot.web.module.service.AppService;
+import com.cuisongliu.springboot.web.module.cache.AppCache;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -51,7 +51,7 @@ public class ClientAuthenticationFilter extends AuthenticationFilter{
     private SpringWebProperties springWebProperties;
 
     @Autowired
-    private AppService appService;
+    private AppCache appCache;
 
     @Override
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
@@ -61,7 +61,7 @@ public class ClientAuthenticationFilter extends AuthenticationFilter{
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue){
-        String backUrl = appService.selectByAppKey(springWebProperties.getAppSuperKey()).getHttpLocal();
+        String backUrl = appCache.selectByAppKey(springWebProperties.getAppSuperKey()).getHttpLocal();
         saveRequest(request, backUrl, getDefaultBackUrl(WebUtils.toHttp(request)));
         try {
             redirectToLogin(request, response);

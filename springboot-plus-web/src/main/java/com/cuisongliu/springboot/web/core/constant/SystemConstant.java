@@ -32,9 +32,9 @@ package com.cuisongliu.springboot.web.core.constant;
 public interface SystemConstant {
 
     /**
-     * 角色和资源的分隔符
+     * 角色和资源的分隔符 逗号
      */
-    String ROLE_SPLIT=",";
+    String SPLIT =",";
     /**
      * 当前session的userInfo
      */
