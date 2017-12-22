@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.shiro.support.constant;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+/**
+ * 系统常量
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-12-19 10:23
+ */
+public interface ShiroConstant {
+
+    /**
+     * 角色和资源的分隔符 逗号
+     */
+    String SPLIT =",";
+    /**
+     * 当前session的userInfo
+     */
+    String CURRENT_USER = "userInfo";
+    /**
+     *  客户端set
+     *  服务端get
+     */
+    String FALLBACK_URL = "authc.fallbackUrl";
 }

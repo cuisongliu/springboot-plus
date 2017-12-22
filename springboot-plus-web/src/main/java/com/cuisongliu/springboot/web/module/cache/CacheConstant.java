@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.web.module.cache;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+/**
+ * 缓存系统常量
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-12-19 10:23
+ */
+interface CacheConstant {
+    String CACHE_USER="cache_user";
+    String CACHE_APP="cache_app";
+    String CACHE_ROLE="cache_role";
+    String CACHE_PERMISSION="cache_permission";
+    String CACHE_AUTHORIZATION="cache_authorization";
 }

@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.web.exception;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+/**
+ * 验证码错误异常
+ *
+ * @author fengshuonan
+ */
+public class InvalidKaptchaException extends RuntimeException {
+    /**
+     * 异常跳转的页面
+     */
+    private String urlPath;
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
 }

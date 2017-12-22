@@ -1,0 +1,206 @@
+package com.cuisongliu.springboot.shiro.support.redis;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.Set;
+
+/**
+ * @author jerry
+ */
+public class RedisManager {
+	
+	private String host;
+	
+	private int port;
+	
+	private int timeout;
+	
+	private String password;
+
+	private int expire = 10;
+	
+	private static JedisPool jedisPool = null;
+	
+	private JedisPoolConfig config =new JedisPoolConfig();
+
+	public RedisManager(String host, int port, int timeout, String password) {
+		this.host = host;
+		this.port = port;
+		this.timeout = timeout;
+		this.password = password;
+	}
+
+	/**
+	 * 初始化方法
+	 */
+	public void init(){
+		if(jedisPool == null){
+			if(password != null && !"".equals(password)){
+				jedisPool = new JedisPool(config, host, port, timeout, password);
+			}else if(timeout != 0){
+				jedisPool = new JedisPool(config, host, port,timeout);
+			}else{
+				jedisPool = new JedisPool(config, host, port);
+			}
+			
+		}
+	}
+	
+	/**
+	 * get value from redis
+	 * @param key
+	 * @return
+	 */
+	public byte[] get(byte[] key){
+		byte[] value = null;
+		Jedis jedis = jedisPool.getResource();
+		try{
+			value = jedis.get(key);
+		}finally{
+			jedis.close();
+		}
+		return value;
+	}
+	
+	/**
+	 * set 
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	public byte[] set(byte[] key,byte[] value){
+		Jedis jedis = jedisPool.getResource();
+		try{
+			jedis.set(key,value);
+			jedis.expire(key, this.expire);
+		}finally{
+			jedis.close();
+		}
+		return value;
+	}
+	
+	/**
+	 * set 
+	 * @param key
+	 * @param value
+	 * @param expire
+	 * @return
+	 */
+	public byte[] set(byte[] key,byte[] value,int expire){
+		Jedis jedis = jedisPool.getResource();
+		try{
+			jedis.set(key,value);
+			if(expire != 0){
+				jedis.expire(key, expire);
+		 	}
+		}finally{
+			jedis.close();
+		}
+		return value;
+	}
+	
+	/**
+	 * del
+	 * @param key
+	 */
+	public void del(byte[] key){
+		Jedis jedis = jedisPool.getResource();
+		try{
+			jedis.del(key);
+		}finally{
+			jedis.close();
+		}
+	}
+	
+	/**
+	 * flush
+	 */
+	public void flushDB(){
+		Jedis jedis = jedisPool.getResource();
+		try{
+			jedis.flushDB();
+		}finally{
+			jedis.close();
+		}
+	}
+	
+	/**
+	 * size
+	 */
+	public Long dbSize(){
+		Long dbSize = 0L;
+		Jedis jedis = jedisPool.getResource();
+		try{
+			dbSize = jedis.dbSize();
+		}finally{
+			jedis.close();
+		}
+		return dbSize;
+	}
+
+	/**
+	 * keys
+	 * @param pattern
+	 * @return
+	 */
+	public Set<byte[]> keys(String pattern){
+		Set<byte[]> keys = null;
+		Jedis jedis = jedisPool.getResource();
+		try{
+			keys = jedis.keys(pattern.getBytes());
+		}finally{
+			jedis.close();
+		}
+		return keys;
+	}
+	
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public int getTimeout() {
+		return timeout;
+	}
+
+	public void setTimeout(int timeout) {
+		this.timeout = timeout;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public JedisPoolConfig getConfig() {
+		return this.config;
+	}
+
+	public void setConfig(JedisPoolConfig config) {
+		this.config = config;
+	}
+
+	public int getExpire() {
+		return expire;
+	}
+
+	public void setExpire(int expire) {
+		this.expire = expire;
+	}
+}

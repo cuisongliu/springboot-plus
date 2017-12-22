@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.web.exception;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+import com.cuisongliu.springboot.core.exception.ExceptionEnum;
+import com.cuisongliu.springboot.core.exception.SpringBootException;
+
+/**
+ * 业务异常
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-12-07 10:15
+ */
+public class WebException extends SpringBootException {
+
+    public WebException(ExceptionEnum plusExceptionEnum) {
+        super(plusExceptionEnum);
+    }
 }

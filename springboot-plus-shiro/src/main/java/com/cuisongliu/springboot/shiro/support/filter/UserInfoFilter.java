@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.shiro.support.filter;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.web.filter.PathMatchingFilter;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+/**
+ * 服务端获取帐号和密码
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-12-20 10:25
+ */
+public class UserInfoFilter extends PathMatchingFilter {
+
+    @Override
+    protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        //TODO 当前用户注入注解 注入UserInfo
+//        request.setAttribute(SystemConstant.CURRENT_USER, userService.findByUsername(username));
+        return true;
+    }
 }

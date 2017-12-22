@@ -1,8 +1,8 @@
-
+package com.cuisongliu.springboot.shiro.autoconfig;
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) ${YEAR} cuisongliu@qq.com
+ * Copyright (c) 2017 cuisongliu@qq.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-apply from: "$rootDir/gradle/subprojects/web.gradle"
-dependencies {
-    compile project(":springboot-plus-core")
-    compile project(":springboot-plus-shiro")
+
+import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
+import com.cuisongliu.springboot.shiro.support.realm.ShiroAbstractRealm;
+import com.cuisongliu.springboot.shiro.support.realm.ShiroClientRealm;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * shiro client config
+ *
+ * @author cuisongliu [cuisongliu@qq.com]
+ * @since 2017-12-18 15:07
+ */
+@Configuration
+@EnableConfigurationProperties({SpringShiroProperties.class})
+@ConditionalOnProperty(prefix = SpringShiroProperties.PROPERTIES_PREFIX, name = "enable-server",havingValue = "false")
+public class ShiroClientConfig {
+
+    @Bean
+    public ShiroAbstractRealm realm(){
+        return  new ShiroClientRealm();
+    }
+
+
 }
