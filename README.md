@@ -58,7 +58,7 @@ Add the following nexus repository(fix china access slow problem,already append 
 
 Add the following dependency to your build.gradle:
     
-    compile "com.cuisongliu:springboot-plus:2+"
+    compile "com.cuisongliu:springboot-plus-core:2+"
     
 ## Add cuisongliu's springboot to project
 
