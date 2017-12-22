@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.core.cache.autoconfig.properties;
+package com.cuisongliu.springboot.cache.autoconfig.properties;
 /*
  * The MIT License (MIT)
  *

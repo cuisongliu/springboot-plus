@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.core.cache.autoconfig;
+package com.cuisongliu.springboot.cache.autoconfig;
 /*
  * The MIT License (MIT)
  *
@@ -24,7 +24,7 @@ package com.cuisongliu.springboot.core.cache.autoconfig;
  */
 
 
-import com.cuisongliu.springboot.core.cache.autoconfig.properties.SpringRedisCacheProperties;
+import com.cuisongliu.springboot.cache.autoconfig.properties.SpringRedisCacheProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;

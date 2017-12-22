@@ -2,10 +2,4 @@ dependencies {
     compile "com.github.penggle:kaptcha:${kaptchaVersion}"
     compile "com.ibeetl:beetl:${beetlVersion}"
     compile "com.cuisongliu:beetl-spring-boot-starter:${springBootBeetlVersion}"
-
-    compile "org.apache.shiro:shiro-core:${shiroVersion}"
-    compile "org.apache.shiro:shiro-spring:${shiroVersion}"
-
-
-    compile "org.springframework.session:spring-session:${springSessionVersion}"
 }
