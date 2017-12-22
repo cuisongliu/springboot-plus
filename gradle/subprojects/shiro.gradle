@@ -5,4 +5,7 @@ dependencies {
     optional "${springBootGroup}:spring-boot-autoconfigure:${springBootVersion}"
     optional "${springBootGroup}:spring-boot-configuration-processor:${springBootVersion}"
     optional "${springBootGroup}:spring-boot-starter-web:${springBootVersion}"
+    optional "${springBootGroup}:spring-boot-starter-aop:${springBootVersion}"
+    optional "com.alibaba:fastjson:${fastJsonVersion}"
+    optional "${springBootGroup}:${springBootArtifactId}data-redis:${springBootVersion}"
 }
