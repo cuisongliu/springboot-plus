@@ -26,5 +26,5 @@ apply from: "$rootDir/gradle/allproject.gradle"
 apply from: "$rootDir/gradle/subdependencies.gradle"
 apply from: "$rootDir/gradle/subprojects/web.gradle"
 dependencies {
-    compile project(":springboot-plus")
+    compile project(":springboot-plus-core")
 }
