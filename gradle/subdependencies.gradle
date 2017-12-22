@@ -46,7 +46,7 @@ dependencies {
     compile "com.alibaba:druid:${druidVersion}"
     compile "com.cuisongliu:druid-spring-boot-starter:${springBootDruidVersion}"
 
-    //configure
+   //configure
     optional "${springBootGroup}:spring-boot-configuration-processor:${springBootVersion}"
     testCompile "${springBootGroup}:${springBootArtifactId}test:${springBootVersion}"
 }

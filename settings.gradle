@@ -2,3 +2,5 @@ rootProject.name = 'springboot'
 include 'springboot-plus'
 include 'springboot-plus-web'
 include 'springboot-plus-rest'
+include 'springboot-plus-cache'
+

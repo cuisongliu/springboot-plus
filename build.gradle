@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subprojects.gradle"
 task printEnv {
     println "当前的工程名称为:[$project.name]"
     repositories.each {

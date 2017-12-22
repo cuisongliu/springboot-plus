@@ -1,0 +1,8 @@
+dependencies {
+    compile "${springBootGroup}:${springBootArtifactId}cache:${springBootVersion}"
+    compile "${springBootGroup}:${springBootArtifactId}data-redis:${springBootVersion}"
+
+    optional "com.fasterxml.jackson.core:jackson-databind:2+"
+    optional "${springBootGroup}:spring-boot-configuration-processor:${springBootVersion}"
+
+}

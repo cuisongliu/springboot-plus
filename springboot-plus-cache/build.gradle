@@ -1,3 +1,4 @@
+
 /*
  * The MIT License (MIT)
  *
@@ -22,7 +23,5 @@
  * THE SOFTWARE.
  */
 apply from: "$rootDir/gradle/allproject.gradle"
-apply from: "$rootDir/gradle/subdependencies.gradle"
-dependencies {
-    compile project(":springboot-plus-cache")
-}
+apply from: "$rootDir/gradle/subprojects.gradle"
+apply from: "$rootDir/gradle/subprojects/cache.gradle"

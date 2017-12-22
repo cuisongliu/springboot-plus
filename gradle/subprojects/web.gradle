@@ -6,7 +6,6 @@ dependencies {
     compile "org.apache.shiro:shiro-core:${shiroVersion}"
     compile "org.apache.shiro:shiro-spring:${shiroVersion}"
 
-    compile "${springBootGroup}:${springBootArtifactId}cache:${springBootVersion}"
-    compile "${springBootGroup}:${springBootArtifactId}data-redis:${springBootVersion}"
+
     compile "org.springframework.session:spring-session:${springSessionVersion}"
 }
