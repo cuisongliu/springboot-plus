@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf.cache;
+package com.cuisongliu.springboot.cache.autoconfig;
 /*
  * The MIT License (MIT)
  *
@@ -23,12 +23,17 @@ package com.cuisongliu.springboot.web.conf.cache;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebCacheProperties;
+
+import com.cuisongliu.springboot.cache.autoconfig.properties.SpringRedisCacheProperties;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -52,14 +57,17 @@ import java.lang.reflect.Method;
  */
 @Configuration
 @EnableCaching
-@EnableConfigurationProperties({RedisProperties.class,SpringWebCacheProperties.class})
+@ConditionalOnClass({ JedisConnectionFactory.class })
+@AutoConfigureAfter(CacheAutoConfiguration.class)
+@EnableConfigurationProperties({SpringRedisCacheProperties.class})
+@ConditionalOnProperty(prefix = SpringRedisCacheProperties.PROPERTIES_PREFIX, name = "type",havingValue = "redis")
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Autowired
-    private RedisProperties redisProperties;
+    private SpringRedisCacheProperties springWebCacheProperties;
 
     @Autowired
-    private SpringWebCacheProperties springWebCacheProperties;
+    private JedisConnectionFactory jedisConnectionFactory;
 
     @Bean
     @Override
@@ -78,23 +86,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         };
     }
 
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(redisProperties.getHost());
-        factory.setPort(redisProperties.getPort());
-        //设置连接超时
-        factory.setTimeout(redisProperties.getTimeout());
-        factory.setPassword(redisProperties.getPassword());
-        return factory;
-    }
-
 
 
     @Bean
+    @ConditionalOnMissingBean(name = "cacheManager")
     @Override
     public CacheManager cacheManager() {
-        StringRedisTemplate template = new StringRedisTemplate(redisConnectionFactory());
+        StringRedisTemplate template = new StringRedisTemplate(jedisConnectionFactory);
         setSerializer(template);
         template.afterPropertiesSet();
         RedisCacheManager cacheManager = new RedisCacheManager(template);

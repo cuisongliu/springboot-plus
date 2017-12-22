@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf.properties;
+package com.cuisongliu.springboot.cache.autoconfig.properties;
 /*
  * The MIT License (MIT)
  *
@@ -24,7 +24,6 @@ package com.cuisongliu.springboot.web.conf.properties;
  */
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * spring boot 额外的配置文件
@@ -32,10 +31,9 @@ import org.springframework.context.annotation.Configuration;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-06 21:19
  */
-@Configuration
-@ConfigurationProperties(prefix = SpringWebCacheProperties.PROPERTIES_PREFIX)
-public class SpringWebCacheProperties {
-    public final static String PROPERTIES_PREFIX = "mars.web.cache";
+@ConfigurationProperties(prefix = SpringRedisCacheProperties.PROPERTIES_PREFIX+".redis")
+public class SpringRedisCacheProperties {
+    public final static String PROPERTIES_PREFIX = "spring.cache";
 
     /**
      * 默认缓存超时时间
@@ -50,7 +48,7 @@ public class SpringWebCacheProperties {
     /**
      *  默认是否使用前缀
      */
-    private boolean usePrefix = false;
+    private boolean usePrefix = true;
 
     /**
      *  默认缓存的前缀为 :
