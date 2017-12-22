@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.core.web.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -23,13 +23,13 @@ package com.cuisongliu.springboot.web.module.cache;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.core.biz.BaseBiz;
+import com.cuisongliu.springboot.core.service.BaseService;
 import com.cuisongliu.springboot.core.util.CollectionUtil;
-import com.cuisongliu.springboot.web.core.constant.SystemConstant;
-import com.cuisongliu.springboot.web.module.dao.PermissionDAO;
-import com.cuisongliu.springboot.web.module.dao.RoleDAO;
-import com.cuisongliu.springboot.web.module.entity.Permission;
-import com.cuisongliu.springboot.web.module.entity.Role;
+import com.cuisongliu.springboot.core.web.core.constant.SystemConstant;
+import com.cuisongliu.springboot.core.web.module.dao.PermissionDAO;
+import com.cuisongliu.springboot.core.web.module.dao.RoleDAO;
+import com.cuisongliu.springboot.core.web.module.entity.Permission;
+import com.cuisongliu.springboot.core.web.module.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -47,7 +47,7 @@ import java.util.Set;
  */
 @Service
 @CacheConfig(cacheNames = CacheConstant.CACHE_ROLE)
-public class RoleCache extends BaseBiz<Role> {
+public class RoleCache extends BaseService<Role> {
 
     @Autowired
     private RoleDAO roleDAO;

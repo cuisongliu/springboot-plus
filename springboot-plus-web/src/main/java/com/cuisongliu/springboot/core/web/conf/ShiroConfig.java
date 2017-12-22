@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf.shiro;
+package com.cuisongliu.springboot.core.web.conf;
 /*
  * The MIT License (MIT)
  *
@@ -23,19 +23,24 @@ package com.cuisongliu.springboot.web.conf.shiro;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
-import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
-import com.cuisongliu.springboot.web.core.redis.RedisManager;
-import com.cuisongliu.springboot.web.core.shiro.ShiroRedisCacheManager;
-import com.cuisongliu.springboot.web.core.shiro.filter.ClientAuthenticationFilter;
-import com.cuisongliu.springboot.web.core.shiro.filter.ServerFormAuthenticationFilter;
-import com.cuisongliu.springboot.web.core.shiro.filter.UserInfoFilter;
-import com.cuisongliu.springboot.web.core.shiro.realm.ShiroAbstractRealm;
+import com.alibaba.druid.pool.DruidDataSource;
+import com.cuisongliu.springboot.core.web.conf.properties.SpringWebProperties;
+import com.cuisongliu.springboot.core.web.conf.properties.SpringWebShiroProperties;
+import com.cuisongliu.springboot.core.web.conf.shiro.ShiroClientConfig;
+import com.cuisongliu.springboot.core.web.conf.shiro.ShiroFilterExtendsFactoryBean;
+import com.cuisongliu.springboot.core.web.conf.shiro.ShiroServerConfig;
+import com.cuisongliu.springboot.core.web.core.redis.RedisManager;
+import com.cuisongliu.springboot.core.web.core.shiro.ShiroRedisCacheManager;
+import com.cuisongliu.springboot.core.web.core.shiro.filter.ClientAuthenticationFilter;
+import com.cuisongliu.springboot.core.web.core.shiro.filter.ServerFormAuthenticationFilter;
+import com.cuisongliu.springboot.core.web.core.shiro.filter.UserInfoFilter;
+import com.cuisongliu.springboot.core.web.core.shiro.realm.ShiroAbstractRealm;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -45,6 +50,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -65,21 +71,37 @@ import java.util.Map;
  */
 @Configuration
 @EnableRedisHttpSession
-@EnableConfigurationProperties({SpringWebProperties.class,SpringWebShiroProperties.class,RedisProperties.class})
+@ConditionalOnClass({DruidDataSource.class, ShiroFilterFactoryBean.class })
+@EnableConfigurationProperties({SpringWebProperties.class,SpringWebShiroProperties.class})
 @Import({ShiroServerConfig.class,ShiroClientConfig.class})
 public class ShiroConfig {
-    @Autowired
-    private RedisProperties redisProperties;
+
     @Autowired
     private SpringWebProperties springWebProperties;
     @Autowired
     private SpringWebShiroProperties springWebShiroProperties;
+
     @Value("${spring.aop.proxy-target-class:false}")
     private boolean proxyTargetClass;
+
+    @Value("${spring.redis.host:localhost}")
+    private String redisHost;
+
+    @Value("${spring.redis.password}")
+    private String redisPassword;
+
+    @Value("${spring.redis.port:6379}")
+    private int redisPort;
+
+    @Value("${spring.redis.timeout}")
+    private int redisTimeout;
+
+    @Autowired
+    private RedisProperties redisProperties;
     ///redis 相关配置  begin///
     @Bean
     public RedisManager redisManager(){
-        return new RedisManager(redisProperties.getHost(),redisProperties.getPort(),redisProperties.getTimeout(),redisProperties.getPassword());
+        return new RedisManager(redisHost,redisPort,redisTimeout,redisPassword);
     }
     /**
      * 缓存管理器 使用redis实现
@@ -191,7 +213,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroFilterExtendsFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager webSecurityManager,UserInfoFilter userInfoFilter){
+    public ShiroFilterExtendsFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager webSecurityManager, UserInfoFilter userInfoFilter){
         ShiroFilterExtendsFactoryBean shiroFilterFactoryBean = new ShiroFilterExtendsFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(webSecurityManager);
         Map<String,Filter> filterMap = new HashMap<>();
@@ -203,7 +225,7 @@ public class ShiroConfig {
         filterMap.put("sysUser",userInfoFilter);
         shiroFilterFactoryBean.setFilters(filterMap);
 
-        String urlPrefix= shiroFilterFactoryBean.appCache.selectByAppKey(springWebProperties.getAppSuperKey()).getHttpLocal();
+        String urlPrefix= shiroFilterFactoryBean.getAppCache().selectByAppKey(springWebProperties.getAppSuperKey()).getHttpLocal();
         shiroFilterFactoryBean.setSuccessUrl(urlPrefix+springWebShiroProperties.getSuccessUrl());
         shiroFilterFactoryBean.setLoginUrl(urlPrefix+springWebShiroProperties.getLoginUrl());
         shiroFilterFactoryBean.setUnauthorizedUrl(urlPrefix+springWebShiroProperties.getUnauthorizedUrl());

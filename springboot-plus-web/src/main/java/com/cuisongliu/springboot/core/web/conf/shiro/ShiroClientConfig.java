@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf.shiro;
+package com.cuisongliu.springboot.core.web.conf.shiro;
 /*
  * The MIT License (MIT)
  *
@@ -23,9 +23,9 @@ package com.cuisongliu.springboot.web.conf.shiro;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
-import com.cuisongliu.springboot.web.core.shiro.realm.ShiroAbstractRealm;
-import com.cuisongliu.springboot.web.core.shiro.realm.ShiroClientRealm;
+import com.cuisongliu.springboot.core.web.conf.properties.SpringWebShiroProperties;
+import com.cuisongliu.springboot.core.web.core.shiro.realm.ShiroAbstractRealm;
+import com.cuisongliu.springboot.core.web.core.shiro.realm.ShiroClientRealm;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

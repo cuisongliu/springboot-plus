@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.redis;
+package com.cuisongliu.springboot.core.web.core.redis;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;

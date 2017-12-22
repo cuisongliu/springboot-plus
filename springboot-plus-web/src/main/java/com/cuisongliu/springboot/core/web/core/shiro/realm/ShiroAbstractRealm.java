@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.shiro.realm;
+package com.cuisongliu.springboot.core.web.core.shiro.realm;
 /*
  * The MIT License (MIT)
  *
@@ -23,10 +23,10 @@ package com.cuisongliu.springboot.web.core.shiro.realm;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.conf.properties.SpringWebProperties;
-import com.cuisongliu.springboot.web.conf.properties.SpringWebShiroProperties;
-import com.cuisongliu.springboot.web.core.shiro.core.UserInfo;
-import com.cuisongliu.springboot.web.module.cache.UserCache;
+import com.cuisongliu.springboot.core.web.conf.properties.SpringWebProperties;
+import com.cuisongliu.springboot.core.web.conf.properties.SpringWebShiroProperties;
+import com.cuisongliu.springboot.core.web.core.shiro.core.UserInfo;
+import com.cuisongliu.springboot.core.web.module.cache.UserCache;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

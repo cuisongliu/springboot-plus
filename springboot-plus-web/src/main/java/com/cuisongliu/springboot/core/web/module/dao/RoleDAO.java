@@ -1,6 +1,6 @@
-package com.cuisongliu.springboot.web.module.dao;
+package com.cuisongliu.springboot.core.web.module.dao;
 
-import com.cuisongliu.springboot.web.module.entity.Role;
+import com.cuisongliu.springboot.core.web.module.entity.Role;
 import tk.mybatis.mapper.common.MyMapper;
 
 /**

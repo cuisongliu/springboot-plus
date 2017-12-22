@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.conf.shiro;
+package com.cuisongliu.springboot.core.web.core.shiro.realm;
 /*
  * The MIT License (MIT)
  *
@@ -23,18 +23,24 @@ package com.cuisongliu.springboot.web.conf.shiro;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.web.module.cache.AppCache;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
 
 /**
- * 重构shiroFactoryBean
+ * shiro 认证工具
  *
  * @author cuisongliu [cuisongliu@qq.com]
- * @since 2017-12-21 20:48
+ * @since 2017-12-18 0:08
  */
-public class ShiroFilterExtendsFactoryBean  extends ShiroFilterFactoryBean{
+public class ShiroClientRealm extends ShiroAbstractRealm {
 
-    @Autowired
-    protected AppCache appCache;
+
+
+
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        //永远不会被调用
+        throw new UnsupportedOperationException("永远不会被调用");
+    }
 }

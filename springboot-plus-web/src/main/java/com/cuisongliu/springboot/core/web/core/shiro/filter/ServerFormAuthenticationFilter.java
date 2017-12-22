@@ -1,6 +1,6 @@
-package com.cuisongliu.springboot.web.core.shiro.filter;
+package com.cuisongliu.springboot.core.web.core.shiro.filter;
 
-import com.cuisongliu.springboot.web.core.constant.SystemConstant;
+import com.cuisongliu.springboot.core.web.core.constant.SystemConstant;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.util.StringUtils;

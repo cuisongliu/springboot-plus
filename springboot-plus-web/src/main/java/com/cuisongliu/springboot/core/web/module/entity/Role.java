@@ -1,8 +1,8 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.core.web.module.entity;
 
 import com.cuisongliu.springboot.core.util.CollectionUtil;
 import com.cuisongliu.springboot.core.util.StringUtil;
-import com.cuisongliu.springboot.web.core.constant.SystemConstant;
+import com.cuisongliu.springboot.core.web.core.constant.SystemConstant;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;

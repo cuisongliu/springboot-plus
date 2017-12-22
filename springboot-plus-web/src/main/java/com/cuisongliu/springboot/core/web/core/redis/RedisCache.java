@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.core.redis;
+package com.cuisongliu.springboot.core.web.core.redis;
 
 import com.cuisongliu.springboot.core.util.SerializeUtil;
 import org.apache.shiro.cache.Cache;

@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.module.tools;
+package com.cuisongliu.springboot.core.module.tools;
 /*
  * The MIT License (MIT)
  *
@@ -23,12 +23,12 @@ package com.cuisongliu.springboot.module.tools;
  * THE SOFTWARE.
  */
 
-import com.cuisongliu.springboot.core.biz.BaseBiz;
+import com.cuisongliu.springboot.core.module.dao.SerialTypeDAO;
+import com.cuisongliu.springboot.core.module.entity.SerialNo;
+import com.cuisongliu.springboot.core.module.entity.SerialType;
+import com.cuisongliu.springboot.core.service.BaseService;
 import com.cuisongliu.springboot.core.util.DateUtil;
 import com.cuisongliu.springboot.core.util.StringUtil;
-import com.cuisongliu.springboot.module.dao.SerialTypeDAO;
-import com.cuisongliu.springboot.module.entity.SerialNo;
-import com.cuisongliu.springboot.module.entity.SerialType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +43,7 @@ import java.util.List;
  * @since 2017-12-07 23:31
  */
 @Service
-public class SerialNoTools extends BaseBiz<SerialNo> {
+public class SerialNoTools extends BaseService<SerialNo> {
     @Autowired
     private SerialTypeDAO serialTypeDAO;
 
