@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.core.util;
+package com.cuisongliu.springboot.shiro.support.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;

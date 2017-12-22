@@ -23,6 +23,3 @@
  */
 apply from: "$rootDir/gradle/allproject.gradle"
 apply from: "$rootDir/gradle/subdependencies.gradle"
-dependencies {
-    compile project(":springboot-plus-cache")
-}
