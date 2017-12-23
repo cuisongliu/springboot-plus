@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -24,7 +24,7 @@ package com.cuisongliu.springboot.web.module.cache;
  */
 
 import com.cuisongliu.springboot.core.service.BaseService;
-import com.cuisongliu.springboot.web.module.entity.Permission;
+import com.cuisongliu.springboot.shiro.support.module.po.Permission;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
