@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.shiro.support.module.po;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

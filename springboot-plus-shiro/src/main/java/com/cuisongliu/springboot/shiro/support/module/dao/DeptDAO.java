@@ -1,6 +1,6 @@
-package com.cuisongliu.springboot.web.module.dao;
+package com.cuisongliu.springboot.shiro.support.module.dao;
 
-import com.cuisongliu.springboot.web.module.entity.Dept;
+import com.cuisongliu.springboot.shiro.support.module.po.Dept;
 import tk.mybatis.mapper.common.MyMapper;
 
 /**
