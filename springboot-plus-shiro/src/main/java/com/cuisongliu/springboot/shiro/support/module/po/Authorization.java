@@ -1,9 +1,8 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.shiro.support.module.po;
 
 import com.cuisongliu.springboot.core.util.CollectionUtil;
 import com.cuisongliu.springboot.core.util.StringUtil;
-import com.cuisongliu.springboot.web.constant.SystemConstant;
-import org.springframework.util.StringUtils;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -84,9 +83,9 @@ public class Authorization implements Serializable {
     public List<Long> getRoleList() {
         List<Long> roleListSuper = new ArrayList<>();
         if(StringUtil.isNotEmpty(this.getRoleIds())){
-            String[] roleIdStr = this.getRoleIds().split(SystemConstant.SPLIT);
+            String[] roleIdStr = this.getRoleIds().split(ShiroConstant.SPLIT);
             for(String roleId : roleIdStr) {
-                if(StringUtils.isEmpty(roleId)) {
+                if(StringUtil.isEmpty(roleId)) {
                     continue;
                 }
                 roleListSuper.add(Long.valueOf(roleId));
@@ -97,7 +96,7 @@ public class Authorization implements Serializable {
     }
 
     public void setRoleList(List<Long> roleList) {
-        this.roleIds = CollectionUtil.join(roleList, SystemConstant.SPLIT);
+        this.roleIds = CollectionUtil.join(roleList, ShiroConstant.SPLIT);
         this.roleList = roleList;
     }
 

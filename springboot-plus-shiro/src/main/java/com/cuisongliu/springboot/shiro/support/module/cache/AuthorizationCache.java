@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -25,14 +25,14 @@ package com.cuisongliu.springboot.web.module.cache;
 
 import com.cuisongliu.springboot.core.service.BaseService;
 import com.cuisongliu.springboot.core.util.CollectionUtil;
-import com.cuisongliu.springboot.web.constant.SystemConstant;
-import com.cuisongliu.springboot.web.module.dao.AuthorizationDAO;
-import com.cuisongliu.springboot.web.module.dao.PermissionDAO;
-import com.cuisongliu.springboot.web.module.dao.RoleDAO;
-import com.cuisongliu.springboot.web.module.entity.App;
-import com.cuisongliu.springboot.web.module.entity.Authorization;
-import com.cuisongliu.springboot.web.module.entity.Permission;
-import com.cuisongliu.springboot.web.module.entity.Role;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
+import com.cuisongliu.springboot.shiro.support.module.dao.AuthorizationDAO;
+import com.cuisongliu.springboot.shiro.support.module.dao.PermissionDAO;
+import com.cuisongliu.springboot.shiro.support.module.dao.RoleDAO;
+import com.cuisongliu.springboot.shiro.support.module.po.App;
+import com.cuisongliu.springboot.shiro.support.module.po.Authorization;
+import com.cuisongliu.springboot.shiro.support.module.po.Permission;
+import com.cuisongliu.springboot.shiro.support.module.po.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -81,7 +81,7 @@ public class AuthorizationCache extends BaseService<Authorization> {
 
     @Cacheable(key = "#roleIds")
     public Set<String> selectRolesNameByRoleIds(Set<Long> roleIds){
-        List<Role> roleList = roleDAO .selectByIds(CollectionUtil.join(roleIds, SystemConstant.SPLIT));
+        List<Role> roleList = roleDAO .selectByIds(CollectionUtil.join(roleIds, ShiroConstant.SPLIT));
         Set<String> roleStringSet = new LinkedHashSet<>();
         for (Role role:roleList){
             roleStringSet.add(role.getRole());
@@ -91,12 +91,12 @@ public class AuthorizationCache extends BaseService<Authorization> {
 
     @Cacheable(key = "#roleIds")
     public Set<String> selectPermissionsByRoleIds(Set<Long> roleIds){
-        List<Role> roleList = roleDAO .selectByIds(CollectionUtil.join(roleIds, SystemConstant.SPLIT));
+        List<Role> roleList = roleDAO .selectByIds(CollectionUtil.join(roleIds, ShiroConstant.SPLIT));
         Set<Long> permissionsIds = new LinkedHashSet<>();
         for (Role role:roleList){
             permissionsIds.addAll(role.getPermissionList());
         }
-        List<Permission> permissionList = permissionDAO.selectByIds(CollectionUtil.join(permissionsIds, SystemConstant.SPLIT));
+        List<Permission> permissionList = permissionDAO.selectByIds(CollectionUtil.join(permissionsIds, ShiroConstant.SPLIT));
         Set<String> permissions = new LinkedHashSet<>();
         for (Permission p:permissionList){
             permissions.add(p.getPermission());
