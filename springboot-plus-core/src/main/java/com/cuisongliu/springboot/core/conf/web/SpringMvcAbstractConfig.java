@@ -63,8 +63,8 @@ import java.util.Set;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.cuisongliu.springboot"})
-@MapperScan(basePackages = {"com.cuisongliu.springboot.module.dao"})
+@ComponentScan(basePackages = { "com.cuisongliu.springboot.core"})
+@MapperScan(basePackages = {"com.cuisongliu.springboot.core.module.dao"})
 public abstract class SpringMvcAbstractConfig extends WebMvcConfigurerAdapter {
 
     /**

@@ -1,7 +1,7 @@
 package com.cuisongliu.springboot.shiro.support.resolver;
 
 import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
-import com.cuisongliu.springboot.shiro.support.entity.UserInfo;
+import com.cuisongliu.springboot.shiro.support.module.dto.UserInfo;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;

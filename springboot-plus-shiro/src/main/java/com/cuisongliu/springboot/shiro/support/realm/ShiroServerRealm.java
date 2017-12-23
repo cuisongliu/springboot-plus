@@ -27,6 +27,8 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.Md5Hash;
 
 /**
  * shiro 认证工具
@@ -43,6 +45,9 @@ public class ShiroServerRealm extends ShiroAbstractRealm {
 
     @Override
     public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
+        md5CredentialsMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
+        md5CredentialsMatcher.setHashIterations(springShiroProperties.getMd5Iterations());
         super.setCredentialsMatcher(credentialsMatcher);
     }
 }

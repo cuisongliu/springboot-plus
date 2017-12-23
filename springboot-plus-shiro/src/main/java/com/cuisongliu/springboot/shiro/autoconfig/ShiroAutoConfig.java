@@ -22,11 +22,15 @@ package com.cuisongliu.springboot.shiro.autoconfig;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
 import com.cuisongliu.springboot.shiro.support.filter.ClientAuthenticationFilter;
 import com.cuisongliu.springboot.shiro.support.filter.ServerFormAuthenticationFilter;
 import com.cuisongliu.springboot.shiro.support.filter.UserInfoFilter;
+import com.cuisongliu.springboot.shiro.support.password.PasswordHelper;
 import com.cuisongliu.springboot.shiro.support.realm.ShiroAbstractRealm;
+import com.cuisongliu.springboot.shiro.support.realm.ShiroClientRealm;
+import com.cuisongliu.springboot.shiro.support.realm.ShiroServerRealm;
 import com.cuisongliu.springboot.shiro.support.redis.RedisManager;
 import com.cuisongliu.springboot.shiro.support.redis.ShiroRedisCacheManager;
 import org.apache.shiro.cache.CacheManager;
@@ -40,6 +44,7 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,9 +53,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Import;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.servlet.Filter;
@@ -67,7 +72,8 @@ import java.util.Map;
 @EnableRedisHttpSession
 @ConditionalOnClass({ShiroFilterFactoryBean.class })
 @EnableConfigurationProperties({SpringShiroProperties.class})
-@Import({ShiroServerConfig.class,ShiroClientConfig.class})
+@ComponentScan(basePackages = { "com.cuisongliu.springboot.shiro"})
+@MapperScan(basePackages = {"com.cuisongliu.springboot.shiro.support.module.dao"})
 public class ShiroAutoConfig {
 
     @Autowired
@@ -110,6 +116,24 @@ public class ShiroAutoConfig {
     public ServletContainerSessionManager servletContainerSessionManager() {
         return new ServletContainerSessionManager();
     }
+
+    @Bean
+    public PasswordHelper passwordHelper(){
+        return  new PasswordHelper();
+    }
+
+    @Bean
+    public ShiroAbstractRealm realm(PasswordHelper passwordHelper){
+        ShiroAbstractRealm realm;
+        if (springShiroProperties.getEnableServer()){
+            realm = new ShiroServerRealm();
+        }else {
+            realm = new ShiroClientRealm();
+        }
+        realm.setPasswordHelper(passwordHelper);
+        return  realm;
+    }
+
     /**
      * 安全管理器
      */

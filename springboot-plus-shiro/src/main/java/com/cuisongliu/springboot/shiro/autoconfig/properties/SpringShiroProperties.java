@@ -24,7 +24,6 @@ package com.cuisongliu.springboot.shiro.autoconfig.properties;
  */
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +34,6 @@ import java.util.Map;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-06 21:19
  */
-@Configuration
 @ConfigurationProperties(prefix = SpringShiroProperties.PROPERTIES_PREFIX)
 public class SpringShiroProperties {
     public final static String PROPERTIES_PREFIX = "spring.shiro";
@@ -53,6 +51,22 @@ public class SpringShiroProperties {
      *  中心服务器的地址
      */
     private String appSuperLocal = "http://localhost";
+
+    /**
+     * md5循环次数
+     */
+    private int md5Iterations = 2;
+
+    /**
+     *  随机生成盐的位数 最好为偶数
+     */
+    private int saltLength = 4;
+
+    /**
+     *
+     */
+    private String dbPrefix = "sys";
+
     /**
      * 是否开启RememberMe
      */
@@ -229,5 +243,29 @@ public class SpringShiroProperties {
 
     public void setAppSuperLocal(String appSuperLocal) {
         this.appSuperLocal = appSuperLocal;
+    }
+
+    public int getMd5Iterations() {
+        return md5Iterations;
+    }
+
+    public void setMd5Iterations(int md5Iterations) {
+        this.md5Iterations = md5Iterations;
+    }
+
+    public int getSaltLength() {
+        return saltLength;
+    }
+
+    public void setSaltLength(int saltLength) {
+        this.saltLength = saltLength;
+    }
+
+    public String getDbPrefix() {
+        return dbPrefix;
+    }
+
+    public void setDbPrefix(String dbPrefix) {
+        this.dbPrefix = dbPrefix;
     }
 }

@@ -30,7 +30,10 @@ package com.cuisongliu.springboot.shiro.support.constant;
  * @since 2017-12-19 10:23
  */
 public interface ShiroConstant {
-
+    /**
+     * 数据库的前缀
+     */
+    String DB_PREFIX = "sys";
     /**
      * 角色和资源的分隔符 逗号
      */

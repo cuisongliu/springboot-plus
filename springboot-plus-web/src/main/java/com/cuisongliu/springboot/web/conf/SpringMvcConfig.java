@@ -29,10 +29,10 @@ import com.cuisongliu.springboot.shiro.support.resolver.UserInfoMethodArgumentRe
 import com.cuisongliu.springboot.web.listener.ConfigListener;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
@@ -46,7 +46,7 @@ import java.util.Properties;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-06 21:05
  */
-@MapperScan(basePackages = {"com.cuisongliu.springboot.web.module.dao"})
+@ComponentScan(basePackages = { "com.cuisongliu.springboot.web"})
 public abstract class SpringMvcConfig extends SpringMvcAbstractConfig {
 
     /**
