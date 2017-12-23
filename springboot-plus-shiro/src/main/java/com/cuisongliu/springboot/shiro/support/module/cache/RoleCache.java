@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -25,11 +25,11 @@ package com.cuisongliu.springboot.web.module.cache;
 
 import com.cuisongliu.springboot.core.service.BaseService;
 import com.cuisongliu.springboot.core.util.CollectionUtil;
-import com.cuisongliu.springboot.web.constant.SystemConstant;
-import com.cuisongliu.springboot.web.module.dao.PermissionDAO;
-import com.cuisongliu.springboot.web.module.dao.RoleDAO;
-import com.cuisongliu.springboot.web.module.entity.Permission;
-import com.cuisongliu.springboot.web.module.entity.Role;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
+import com.cuisongliu.springboot.shiro.support.module.dao.PermissionDAO;
+import com.cuisongliu.springboot.shiro.support.module.dao.RoleDAO;
+import com.cuisongliu.springboot.shiro.support.module.po.Permission;
+import com.cuisongliu.springboot.shiro.support.module.po.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -58,12 +58,12 @@ public class RoleCache extends BaseService<Role> {
     public Set<String> selectPermissionsByRoles(Set<Long> roles){
         Set<Long> permissionIds = new LinkedHashSet<>();
         //获取所有的角色
-        List<Role> roleList=  roleDAO.selectByIds(CollectionUtil.join(roles, SystemConstant.SPLIT));
+        List<Role> roleList=  roleDAO.selectByIds(CollectionUtil.join(roles, ShiroConstant.SPLIT));
         for (Role role : roleList){
             permissionIds.addAll(role.getPermissionList());
         }
         Set<String> permissionsResult = new LinkedHashSet<>();
-        List<Permission> permissions = permissionDAO.selectByIds(CollectionUtil.join(permissionIds, SystemConstant.SPLIT));
+        List<Permission> permissions = permissionDAO.selectByIds(CollectionUtil.join(permissionIds, ShiroConstant.SPLIT));
         for (Permission p : permissions){
             permissionsResult.add(p.getPermission());
         }

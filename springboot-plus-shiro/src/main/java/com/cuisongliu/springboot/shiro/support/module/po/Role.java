@@ -1,9 +1,8 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.shiro.support.module.po;
 
 import com.cuisongliu.springboot.core.util.CollectionUtil;
 import com.cuisongliu.springboot.core.util.StringUtil;
-import com.cuisongliu.springboot.web.constant.SystemConstant;
-import org.springframework.util.StringUtils;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -109,9 +108,9 @@ public class Role implements Serializable {
 	public List<Long> getPermissionList() {
 		List<Long> permissionListSuper = new ArrayList<>();
 		if(StringUtil.isNotEmpty(this.getPermissionIds())){
-			String[] permissionIdStr = this.getPermissionIds().split(SystemConstant.SPLIT);
+			String[] permissionIdStr = this.getPermissionIds().split(ShiroConstant.SPLIT);
 			for(String permissionId : permissionIdStr) {
-				if(StringUtils.isEmpty(permissionId)) {
+				if(StringUtil.isEmpty(permissionId)) {
 					continue;
 				}
 				permissionListSuper.add(Long.valueOf(permissionId));
@@ -122,7 +121,7 @@ public class Role implements Serializable {
 	}
 
 	public void setPermissionList(List<Long> permissionList) {
-		this.permissionIds=CollectionUtil.join(permissionList,SystemConstant.SPLIT);
+		this.permissionIds=CollectionUtil.join(permissionList,ShiroConstant.SPLIT);
 		this.permissionList = permissionList;
 	}
 
