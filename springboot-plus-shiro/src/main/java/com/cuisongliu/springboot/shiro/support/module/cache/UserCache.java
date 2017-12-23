@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -24,9 +24,9 @@ package com.cuisongliu.springboot.web.module.cache;
  */
 
 import com.cuisongliu.springboot.core.service.BaseService;
-import com.cuisongliu.springboot.shiro.support.entity.UserInfo;
-import com.cuisongliu.springboot.web.module.dao.UserDAO;
-import com.cuisongliu.springboot.web.module.entity.User;
+import com.cuisongliu.springboot.shiro.support.module.dao.UserDAO;
+import com.cuisongliu.springboot.shiro.support.module.dto.UserInfo;
+import com.cuisongliu.springboot.shiro.support.module.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -57,9 +57,8 @@ public class UserCache extends BaseService<User> {
         user = userDAO.selectOne(user);
         UserInfo userInfo = null;
         if (user !=null){
-            //TODO USERINFO
-//            userInfo = new UserInfo(user);
-            Set<Long> roleIdSet = authorizationCache.selectRolesIdByUserId(appKey,1L);
+            userInfo = new UserInfo(user);
+            Set<Long> roleIdSet = authorizationCache.selectRolesIdByUserId(appKey,userInfo.getId());
             userInfo.setRoles(authorizationCache.selectRolesNameByRoleIds(roleIdSet));
             userInfo.setPermissions(authorizationCache.selectPermissionsByRoleIds(roleIdSet));
         }

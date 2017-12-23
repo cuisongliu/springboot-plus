@@ -1,4 +1,6 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.shiro.support.module.po;
+
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  * @author cuijinrui
  * @since 2017-07-11
  */
-@Table(name="s_user")
+@Table(name= ShiroConstant.DB_PREFIX +"s_user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

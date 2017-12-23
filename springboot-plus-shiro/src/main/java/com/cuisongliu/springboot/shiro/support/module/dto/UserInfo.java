@@ -1,4 +1,7 @@
-package com.cuisongliu.springboot.shiro.support.entity;
+package com.cuisongliu.springboot.shiro.support.module.dto;
+
+import com.cuisongliu.springboot.shiro.support.module.po.User;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Set;
 
@@ -7,12 +10,11 @@ import java.util.Set;
  * <p>Version: 1.0
  * @author jerry
  */
-//TODO 继承User
-public class UserInfo  {
+public class UserInfo extends User  {
 
-//    public UserInfo(User user){
-//        BeanUtils.copyProperties(user,this);
-//    }
+    public UserInfo(User user){
+        BeanUtils.copyProperties(user,this);
+    }
 
     private Set<String> roles;
     private Set<String> permissions;
