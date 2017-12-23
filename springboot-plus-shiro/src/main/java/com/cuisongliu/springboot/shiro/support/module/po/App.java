@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.entity;
+package com.cuisongliu.springboot.shiro.support.module.po;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -32,11 +32,6 @@ public class App implements Serializable {
      */
 	@Column(name = "app_key")
 	private String appKey;
-	/**
-	 *  系统网址
-	 */
-	@Column(name = "http_local")
-	private String httpLocal;
     /**
      *  是否可用
      */
@@ -64,14 +59,6 @@ public class App implements Serializable {
 
 	public void setAppKey(String appKey) {
 		this.appKey = appKey;
-	}
-
-	public String getHttpLocal() {
-		return httpLocal;
-	}
-
-	public void setHttpLocal(String httpLocal) {
-		this.httpLocal = httpLocal;
 	}
 
 	public Boolean getAvailable() {

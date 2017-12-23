@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
@@ -24,8 +24,8 @@ package com.cuisongliu.springboot.web.module.cache;
  */
 
 import com.cuisongliu.springboot.core.service.BaseService;
-import com.cuisongliu.springboot.web.module.dao.AppDAO;
-import com.cuisongliu.springboot.web.module.entity.App;
+import com.cuisongliu.springboot.shiro.support.module.dao.AppDAO;
+import com.cuisongliu.springboot.shiro.support.module.po.App;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
