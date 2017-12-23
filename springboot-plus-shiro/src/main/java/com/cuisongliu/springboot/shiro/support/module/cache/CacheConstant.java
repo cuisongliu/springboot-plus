@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.module.cache;
+package com.cuisongliu.springboot.shiro.support.module.cache;
 /*
  * The MIT License (MIT)
  *
