@@ -2,10 +2,4 @@ dependencies {
     compile "org.apache.shiro:shiro-core:${shiroVersion}"
     compile "org.apache.shiro:shiro-spring:${shiroVersion}"
     compile "org.springframework.session:spring-session:${springSessionVersion}"
-    optional "${springBootGroup}:spring-boot-autoconfigure:${springBootVersion}"
-    optional "${springBootGroup}:spring-boot-configuration-processor:${springBootVersion}"
-    optional "${springBootGroup}:spring-boot-starter-web:${springBootVersion}"
-    optional "${springBootGroup}:spring-boot-starter-aop:${springBootVersion}"
-    optional "com.alibaba:fastjson:${fastJsonVersion}"
-    optional "${springBootGroup}:${springBootArtifactId}data-redis:${springBootVersion}"
 }
