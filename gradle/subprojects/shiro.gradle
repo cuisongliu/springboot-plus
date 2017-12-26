@@ -2,4 +2,5 @@ dependencies {
     compile "org.apache.shiro:shiro-core:${shiroVersion}"
     compile "org.apache.shiro:shiro-spring:${shiroVersion}"
     compile "org.springframework.session:spring-session:${springSessionVersion}"
+    optional "${springBootGroup}:${springBootArtifactId}data-redis:${springBootVersion}"
 }

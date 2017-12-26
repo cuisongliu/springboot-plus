@@ -26,6 +26,6 @@ apply from: "$rootDir/gradle/allproject.gradle"
 apply from: "$rootDir/gradle/subdependencies.gradle"
 apply from: "$rootDir/gradle/subprojects/shiro.gradle"
 dependencies {
+    optional project(":springboot-plus-cache")
     compile project(":springboot-plus-core")
-    compile project(":springboot-plus-cache")
 }
