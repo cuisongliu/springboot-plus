@@ -23,12 +23,10 @@ package com.cuisongliu.springboot.shiro.support.realm;
  * THE SOFTWARE.
  */
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.hash.Md5Hash;
+import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
+import com.cuisongliu.springboot.shiro.support.module.dto.UserInfo;
+import com.cuisongliu.springboot.shiro.support.password.PasswordHelper;
+import org.apache.shiro.authc.*;
 
 /**
  * shiro 认证工具
@@ -38,16 +36,22 @@ import org.apache.shiro.crypto.hash.Md5Hash;
  */
 public class ShiroServerRealm extends ShiroAbstractRealm {
 
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return null;
+    public ShiroServerRealm(SpringShiroProperties springShiroProperties,PasswordHelper passwordHelper) {
+        super(springShiroProperties,passwordHelper);
     }
 
     @Override
-    public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
-        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
-        md5CredentialsMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
-        md5CredentialsMatcher.setHashIterations(springShiroProperties.getMd5Iterations());
-        super.setCredentialsMatcher(credentialsMatcher);
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        String username = (String)authenticationToken.getPrincipal();
+        UserInfo user = userCache.selectUserInfoByUsername(springShiroProperties.getAppKey(),username);
+        if(user == null) {
+            //没找到帐号
+            throw new UnknownAccountException();
+        }
+        if(Boolean.TRUE.equals(user.getLocked())) {
+            //帐号锁定
+            throw new LockedAccountException();
+        }
+        return passwordHelper.authInfo(user,this);
     }
 }

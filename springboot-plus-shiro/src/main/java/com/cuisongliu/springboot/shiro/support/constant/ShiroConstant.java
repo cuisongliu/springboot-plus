@@ -47,4 +47,14 @@ public interface ShiroConstant {
      *  服务端get
      */
     String FALLBACK_URL = "authc.fallbackUrl";
+
+    /**
+     *  需要扫描的包
+     */
+    String COMPONENT_PACKAGE = "com.cuisongliu.springboot.shiro";
+
+    /**
+     * 需要扫描的mapper
+     */
+    String MAPPER_PACKAGE = "com.cuisongliu.springboot.shiro.support.module.dao";
 }

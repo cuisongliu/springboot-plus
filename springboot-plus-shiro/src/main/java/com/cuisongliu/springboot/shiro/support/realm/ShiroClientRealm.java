@@ -23,6 +23,8 @@ package com.cuisongliu.springboot.shiro.support.realm;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
+import com.cuisongliu.springboot.shiro.support.password.PasswordHelper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -36,7 +38,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 public class ShiroClientRealm extends ShiroAbstractRealm {
 
 
-
+    public ShiroClientRealm(SpringShiroProperties springShiroProperties,PasswordHelper passwordHelper) {
+        super(springShiroProperties,passwordHelper);
+    }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {

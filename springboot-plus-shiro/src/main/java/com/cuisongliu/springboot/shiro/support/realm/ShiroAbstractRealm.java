@@ -24,6 +24,7 @@ package com.cuisongliu.springboot.shiro.support.realm;
  */
 
 import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
+import com.cuisongliu.springboot.shiro.support.module.cache.UserCache;
 import com.cuisongliu.springboot.shiro.support.module.dto.UserInfo;
 import com.cuisongliu.springboot.shiro.support.password.PasswordHelper;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -39,10 +40,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @since 2017-12-18 15:12
  */
 public abstract class ShiroAbstractRealm extends AuthorizingRealm{
-    @Autowired
-    protected SpringShiroProperties springShiroProperties;
 
-    protected PasswordHelper passwordHelper;
+    protected  final SpringShiroProperties springShiroProperties;
+
+    protected final  PasswordHelper passwordHelper;
+
+    @Autowired
+    protected UserCache userCache;
+
+    public ShiroAbstractRealm(SpringShiroProperties springShiroProperties,PasswordHelper passwordHelper){
+        this.passwordHelper=passwordHelper;
+        this.springShiroProperties = springShiroProperties ;
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -55,15 +64,10 @@ public abstract class ShiroAbstractRealm extends AuthorizingRealm{
         }else {
             appKey  = springShiroProperties.getAppKey();
         }
-        //TODO USERINFO 缓存
-        UserInfo userInfo = null;
-//        UserInfo userInfo = userCache.selectUserInfoByUsername(appKey,username);
+        UserInfo userInfo = userCache.selectUserInfoByUsername(appKey,username);
         authorizationInfo.setRoles(userInfo.getRoles());
         authorizationInfo.setStringPermissions(userInfo.getPermissions());
         return authorizationInfo;
     }
 
-    public void setPasswordHelper(PasswordHelper passwordHelper) {
-        this.passwordHelper = passwordHelper;
-    }
 }

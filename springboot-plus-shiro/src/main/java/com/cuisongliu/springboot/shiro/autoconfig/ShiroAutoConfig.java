@@ -23,6 +23,7 @@ package com.cuisongliu.springboot.shiro.autoconfig;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.cache.autoconfig.RedisCacheAutoConfig;
 import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
 import com.cuisongliu.springboot.shiro.support.filter.ClientAuthenticationFilter;
 import com.cuisongliu.springboot.shiro.support.filter.ServerFormAuthenticationFilter;
@@ -33,8 +34,10 @@ import com.cuisongliu.springboot.shiro.support.realm.ShiroClientRealm;
 import com.cuisongliu.springboot.shiro.support.realm.ShiroServerRealm;
 import com.cuisongliu.springboot.shiro.support.redis.RedisManager;
 import com.cuisongliu.springboot.shiro.support.redis.ShiroRedisCacheManager;
-import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -44,18 +47,18 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import javax.servlet.Filter;
@@ -71,15 +74,15 @@ import java.util.Map;
 @Configuration
 @EnableRedisHttpSession
 @ConditionalOnClass({ShiroFilterFactoryBean.class })
+@AutoConfigureAfter(RedisCacheAutoConfig.class)
+@ConditionalOnBean(RedisTemplate.class)
 @EnableConfigurationProperties({SpringShiroProperties.class})
-@ComponentScan(basePackages = { "com.cuisongliu.springboot.shiro"})
-@MapperScan(basePackages = {"com.cuisongliu.springboot.shiro.support.module.dao"})
 public class ShiroAutoConfig {
 
     @Autowired
     private SpringShiroProperties springShiroProperties;
 
-    @Value("${spring.aop.proxy-target-class:false}")
+    @Value("#{ @environment[\'spring.aop.proxy-target-class\'] ?: false }")
     private boolean proxyTargetClass;
 
     @Value("${spring.redis.host:localhost}")
@@ -94,21 +97,10 @@ public class ShiroAutoConfig {
     @Value("${spring.redis.timeout}")
     private int redisTimeout;
 
-    @Autowired
-    private RedisProperties redisProperties;
-    ///redis 相关配置  begin///
-    @Bean
-    public RedisManager redisManager(){
-        return new RedisManager(redisHost,redisPort,redisTimeout,redisPassword);
+    @Bean("passwordHelper")
+    public PasswordHelper passwordHelper(){
+        return new PasswordHelper(springShiroProperties);
     }
-    /**
-     * 缓存管理器 使用redis实现
-     */
-    @Bean
-    public ShiroRedisCacheManager shiroRedisCacheManager(RedisManager redisManager){
-        return new ShiroRedisCacheManager(redisManager, springShiroProperties.getRedisCacheKey());
-    }
-    ///redis 相关配置  end///
     /**
      * spring session管理器（多机环境）
      */
@@ -118,19 +110,23 @@ public class ShiroAutoConfig {
     }
 
     @Bean
-    public PasswordHelper passwordHelper(){
-        return  new PasswordHelper();
+    CredentialsMatcher credentialsMatcher(){
+        HashedCredentialsMatcher md5CredentialsMatcher = new HashedCredentialsMatcher();
+        md5CredentialsMatcher.setHashAlgorithmName(Md5Hash.ALGORITHM_NAME);
+        md5CredentialsMatcher.setHashIterations(springShiroProperties.getMd5Iterations());
+        return  md5CredentialsMatcher;
     }
 
     @Bean
-    public ShiroAbstractRealm realm(PasswordHelper passwordHelper){
+    @DependsOn("credentialsMatcher")
+    public ShiroAbstractRealm realm(CredentialsMatcher credentialsMatcher,PasswordHelper passwordHelper){
         ShiroAbstractRealm realm;
         if (springShiroProperties.getEnableServer()){
-            realm = new ShiroServerRealm();
+            realm = new ShiroServerRealm(springShiroProperties,passwordHelper);
         }else {
-            realm = new ShiroClientRealm();
+            realm = new ShiroClientRealm(springShiroProperties,passwordHelper);
         }
-        realm.setPasswordHelper(passwordHelper);
+        realm.setCredentialsMatcher(credentialsMatcher);
         return  realm;
     }
 
@@ -138,10 +134,14 @@ public class ShiroAutoConfig {
      * 安全管理器
      */
     @Bean
-    public DefaultWebSecurityManager securityManager(CacheManager cacheShiroManager, SessionManager sessionManager, ShiroAbstractRealm realm) {
+    public DefaultWebSecurityManager securityManager(SessionManager sessionManager, ShiroAbstractRealm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
-        securityManager.setCacheManager(cacheShiroManager);
+
+        RedisManager redisManager = new RedisManager(redisHost,redisPort,redisTimeout,redisPassword);
+        ShiroRedisCacheManager shiroRedisCacheManager = new ShiroRedisCacheManager(redisManager, springShiroProperties.getRedisCacheKey());
+
+        securityManager.setCacheManager(shiroRedisCacheManager);
 
         {
             if (springShiroProperties.getEnableRememberMe()){
@@ -214,7 +214,7 @@ public class ShiroAutoConfig {
         return new UserInfoFilter();
     }
 
-    public ServerFormAuthenticationFilter serverAuthenticationFilter(){
+    private ServerFormAuthenticationFilter serverAuthenticationFilter(){
         ServerFormAuthenticationFilter filter = new ServerFormAuthenticationFilter();
         if (springShiroProperties.getEnableRememberMe()){
             filter.setRememberMeParam(FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
@@ -224,7 +224,7 @@ public class ShiroAutoConfig {
         return filter;
     }
 
-    public ClientAuthenticationFilter clientAuthenticationFilter(){
+    private ClientAuthenticationFilter clientAuthenticationFilter(){
         return  new ClientAuthenticationFilter();
     }
 
