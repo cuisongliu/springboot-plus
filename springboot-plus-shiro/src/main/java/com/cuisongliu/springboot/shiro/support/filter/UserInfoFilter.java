@@ -23,8 +23,13 @@ package com.cuisongliu.springboot.shiro.support.filter;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.springboot.shiro.autoconfig.properties.SpringShiroProperties;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
+import com.cuisongliu.springboot.shiro.support.module.cache.UserCache;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.PathMatchingFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -37,11 +42,14 @@ import javax.servlet.ServletResponse;
  */
 public class UserInfoFilter extends PathMatchingFilter {
 
+    @Value("${"+ SpringShiroProperties.PROPERTIES_PREFIX+".app-key}")
+    private String appKey;
+    @Autowired
+    protected UserCache userCache;
     @Override
     protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         String username = (String) SecurityUtils.getSubject().getPrincipal();
-        //TODO 当前用户注入注解 注入UserInfo
-//        request.setAttribute(SystemConstant.CURRENT_USER, userService.findByUsername(username));
+        request.setAttribute(ShiroConstant.CURRENT_USER, userCache.selectUserInfoByUsername(appKey,username));
         return true;
     }
 }

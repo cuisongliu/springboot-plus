@@ -61,10 +61,10 @@ import java.lang.reflect.Method;
 @AutoConfigureAfter(CacheAutoConfiguration.class)
 @EnableConfigurationProperties({SpringRedisCacheProperties.class})
 @ConditionalOnProperty(prefix = SpringRedisCacheProperties.PROPERTIES_PREFIX, name = "type",havingValue = "redis")
-public class RedisCacheConfig extends CachingConfigurerSupport {
+public class RedisCacheAutoConfig extends CachingConfigurerSupport {
 
     @Autowired
-    private SpringRedisCacheProperties springWebCacheProperties;
+    private  SpringRedisCacheProperties springWebCacheProperties;
 
     @Autowired
     private JedisConnectionFactory jedisConnectionFactory;

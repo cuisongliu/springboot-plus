@@ -25,10 +25,12 @@ package com.cuisongliu.springboot.web.conf;
 
 import com.cuisongliu.springboot.core.conf.web.SpringMvcAbstractConfig;
 import com.cuisongliu.springboot.core.util.web.xss.XssFilter;
+import com.cuisongliu.springboot.shiro.support.constant.ShiroConstant;
 import com.cuisongliu.springboot.shiro.support.resolver.UserInfoMethodArgumentResolver;
 import com.cuisongliu.springboot.web.listener.ConfigListener;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +48,8 @@ import java.util.Properties;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2017-12-06 21:05
  */
-@ComponentScan(basePackages = { "com.cuisongliu.springboot.web"})
+@ComponentScan(basePackages = { ShiroConstant.COMPONENT_PACKAGE,"com.cuisongliu.springboot.web"})
+@MapperScan(basePackages = {ShiroConstant.MAPPER_PACKAGE})
 public abstract class SpringMvcConfig extends SpringMvcAbstractConfig {
 
     /**
