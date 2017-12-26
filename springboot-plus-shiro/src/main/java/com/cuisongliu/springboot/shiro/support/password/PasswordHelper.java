@@ -31,7 +31,6 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * password 帮助类
@@ -42,10 +41,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PasswordHelper {
 
 
-    @Autowired
-    private SpringShiroProperties springShiroProperties;
+    private final SpringShiroProperties springShiroProperties;
 
     private SecureRandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
+
+    public PasswordHelper(SpringShiroProperties springShiroProperties) {
+        this.springShiroProperties = springShiroProperties;
+    }
 
     /**
      * 获取随机位数的字符串

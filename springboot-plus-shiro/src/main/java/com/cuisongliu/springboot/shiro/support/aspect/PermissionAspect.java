@@ -42,7 +42,7 @@ import org.springframework.stereotype.Component;
 public class PermissionAspect {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     // Controller层切点
-    @Pointcut("@annotation(com.cuisongliu.springboot.core.web.annotion.Permission)")
+    @Pointcut("@annotation(com.cuisongliu.springboot.shiro.support.annotion.Permission)")
     public void permissionAspect() {
     }
 

@@ -1,4 +1,4 @@
-package com.cuisongliu.springboot.web.annotion;
+package com.cuisongliu.springboot.shiro.support.annotion;
 /*
  * The MIT License (MIT)
  *
